@@ -2,7 +2,7 @@ spring:
   application:
     name: user-account-service
 server:
-  port: 0
+  port: 8085
 eureka:
   client:
     serviceUrl:

@@ -11,7 +11,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 @EnableEurekaClient
 @EntityScan("com.rmaciel.academy.core.models")
 @EnableJpaRepositories("com.rmaciel.academy.core.repositories")
-@ComponentScan({"com.rmaciel.academy.token"})
+@ComponentScan({"com.rmaciel.academy.token", "com.rmaciel.assetmanagement.useraccount"})
 public class UserAccountApplication {
 
 	public static void main(String[] args) {

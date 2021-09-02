@@ -9,8 +9,9 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
 @Entity
-@Getter
+@Data
 @NoArgsConstructor
+@AllArgsConstructor
 @ToString
 public class UserAccount {
     @Id
