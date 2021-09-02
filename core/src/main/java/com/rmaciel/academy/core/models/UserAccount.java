@@ -1,5 +1,6 @@
 package com.rmaciel.academy.core.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.*;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
@@ -13,6 +14,7 @@ import javax.validation.constraints.NotNull;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
+@JsonIgnoreProperties(value = { "password" })
 public class UserAccount {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

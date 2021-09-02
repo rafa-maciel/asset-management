@@ -15,8 +15,6 @@ import javax.validation.constraints.NotNull;
 @NoArgsConstructor
 @Getter
 public class UserAccountForm {
-    private Long id;
-
     @NotNull @Email @NotEmpty
     private String email;
 
@@ -29,7 +27,7 @@ public class UserAccountForm {
     private UserAccountProfile profile = UserAccountProfile.RH;
 
     public UserAccount build() {
-        return new UserAccount(id, email, name, password, enabled, profile);
+        return new UserAccount(email, name, password, enabled, profile);
     }
 
     public UserAccount updateFrom(UserAccount account) {

@@ -36,5 +36,10 @@
             <artifactId>spring-security-crypto</artifactId>
             <version>${security-crypto.version}</version>
         </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.dataformat</groupId>
+            <artifactId>jackson-dataformat-xml</artifactId>
+            <version>2.12.4</version>
+        </dependency>
     </dependencies>
 </project>

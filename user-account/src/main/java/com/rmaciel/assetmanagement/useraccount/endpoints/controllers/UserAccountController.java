@@ -57,6 +57,16 @@ public class UserAccountController {
         return ResponseEntity.ok(account);
     }
 
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> delete(@PathVariable Long id) throws NotFoundException {
+        Optional<UserAccount> optional = accountRepository.findById(id);
+        if (optional.isEmpty())
+            throw new NotFoundException("User account has been not find by ID " + id);
+
+        accountRepository.delete(optional.get());
+        return ResponseEntity.ok().build();
+    }
+
     @GetMapping("/search")
     public ResponseEntity<Page<UserAccount>> search(Pageable pageable, @Valid UserAccountSearchForm form) {
         Specification<UserAccount> accountSpecs = form.buildSpecs();

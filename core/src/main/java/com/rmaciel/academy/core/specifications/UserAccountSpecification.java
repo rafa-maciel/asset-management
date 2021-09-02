@@ -8,33 +8,32 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 
-public class UserAccountSpecification {
-    public Specification<UserAccount> likeEmail(String email) {
+public abstract class UserAccountSpecification {
+    public static Specification<UserAccount> likeEmail(String email) {
         return (Root<UserAccount> root, CriteriaQuery<?> criteriaQuery, CriteriaBuilder criteriaBuilder) -> {
+            if (email == null || email.isEmpty()) return null;
             return criteriaBuilder.like(root.get("email"), "%" + email + "%");
         };
     }
 
-    public Specification<UserAccount> likeName(String name) {
+    public static Specification<UserAccount> likeName(String name) {
         return (Root<UserAccount> root, CriteriaQuery<?> criteriaQuery, CriteriaBuilder criteriaBuilder) -> {
+            if (name == null || name.isEmpty()) return null;
             return criteriaBuilder.like(root.get("name"), "%" + name + "%");
         };
     }
 
-    public Specification<UserAccount> isEnabled() {
+    public static Specification<UserAccount> enabledEqual(Boolean enabled) {
         return (Root<UserAccount> root, CriteriaQuery<?> criteriaQuery, CriteriaBuilder criteriaBuilder) -> {
-            return criteriaBuilder.equal(root.get("enabled"), Boolean.TRUE);
+            if (enabled == null) return null;
+
+            return criteriaBuilder.equal(root.get("enabled"), enabled);
         };
     }
 
-    public Specification<UserAccount> isDisabled() {
+    public static Specification<UserAccount> equalProfile(UserAccountProfile profile) {
         return (Root<UserAccount> root, CriteriaQuery<?> criteriaQuery, CriteriaBuilder criteriaBuilder) -> {
-            return criteriaBuilder.equal(root.get("enabled"), Boolean.FALSE);
-        };
-    }
-
-    public Specification<UserAccount> equalProfile(UserAccountProfile profile) {
-        return (Root<UserAccount> root, CriteriaQuery<?> criteriaQuery, CriteriaBuilder criteriaBuilder) -> {
+            if (profile == null) return null;
             return criteriaBuilder.equal(root.get("profile"), profile);
         };
     }
