@@ -34,6 +34,7 @@ public class AuthenticationController {
             UserAccountDetails userAccountDetails = (UserAccountDetails) authenticate.getPrincipal();
 
             TokenDTO tokenDTO = tokenService.convertToDTO(userAccountDetails.getUserAccount());
+            log.info("Token has been created: " + tokenDTO.getToken());
             return ResponseEntity.ok(tokenDTO);
         } catch (AuthenticationException ex) {
             log.warn(ex.getMessage());

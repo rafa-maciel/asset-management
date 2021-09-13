@@ -30,6 +30,9 @@ public class TokenService {
                 .setIssuer("Cloud Gateway Example")
                 .setSubject(userAccount.getId().toString())
                 .setIssuedAt(currentDatetime)
+                .claim("name", userAccount.getName())
+                .claim("profile", userAccount.getProfile())
+                .claim("identification", userAccount.getId())
                 .setExpiration(expirationDatetime)
                 .signWith(SignatureAlgorithm.HS256, tokenProperties.getJwtSecret())
                 .compact();
@@ -72,5 +75,9 @@ public class TokenService {
         String header = request.getHeader("Authorization");
         String token = formatToken(header);
         return isValid(token) ? token : null;
+    }
+
+    private String generateSubject(UserAccount userAccount) {
+        return String.format("{id: %o, name: %s, profile: %s}", userAccount.getId(), userAccount.getName(), userAccount.getProfile());
     }
 }

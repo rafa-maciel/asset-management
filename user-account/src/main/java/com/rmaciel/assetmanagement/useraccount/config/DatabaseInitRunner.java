@@ -1,9 +1,7 @@
-package com.rmaciel.academy.auth.config;
+package com.rmaciel.assetmanagement.useraccount.config;
 
-import com.rmaciel.academy.core.models.Book;
 import com.rmaciel.academy.core.models.UserAccount;
 import com.rmaciel.academy.core.models.UserAccountProfile;
-import com.rmaciel.academy.core.repositories.BookRepository;
 import com.rmaciel.academy.core.repositories.UserAccountRepository;
 import lombok.ToString;
 import lombok.extern.slf4j.Slf4j;
@@ -24,6 +22,12 @@ public class DatabaseInitRunner implements CommandLineRunner {
     public void run(String... args) throws Exception {
         log.info(
                 this.userAccountRepository.save(new UserAccount("rafa@rafa.com", "Rafa", "rafa123", true, UserAccountProfile.ADMIN)).toString()
+        );
+        log.info(
+                this.userAccountRepository.save(new UserAccount("lu@rafa.com", "Luciana", "rafa123", true, UserAccountProfile.RH)).toString()
+        );
+        log.info(
+                this.userAccountRepository.save(new UserAccount("gabriel@rafa.com", "Gabriel", "rafa123", true, UserAccountProfile.IT)).toString()
         );
     }
 }

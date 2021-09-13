@@ -14,6 +14,8 @@ spring:
           uri: lb://AUTH
           predicates:
             - Path=/auth/**
+          filters:
+            - DedupeResponseHeader=Access-Control-Allow-Credentials Access-Control-Allow-Origin
         - id: user-account-service
           uri: lb://USER-ACCOUNT-SERVICE
           predicates:
