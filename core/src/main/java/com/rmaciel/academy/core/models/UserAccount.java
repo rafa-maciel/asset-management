@@ -44,4 +44,9 @@ public class UserAccount {
         this.enabled = enabled;
         this.profile = profile;
     }
+
+    public void reset(String newPassword) {
+        this.enabled = true;
+        this.password = new BCryptPasswordEncoder().encode(newPassword);
+    }
 }

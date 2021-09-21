@@ -57,6 +57,20 @@ public class UserAccountController {
         return ResponseEntity.ok(account);
     }
 
+    @SneakyThrows
+    @PutMapping("/{id}/reset")
+    public ResponseEntity<UserAccount> reset(@PathVariable Long id, @RequestBody String newPassword) {
+        Optional<UserAccount> optional = accountRepository.findById(id);
+        if (optional.isEmpty())
+            throw new NotFoundException("User account has been not find by ID " + id);
+        UserAccount account = optional.get();
+        account.reset(newPassword);
+
+        UserAccount accountUpdated = accountRepository.save(account);
+
+        return ResponseEntity.ok(accountUpdated);
+    }
+
     @DeleteMapping("/{id}")
     public ResponseEntity<?> delete(@PathVariable Long id) throws NotFoundException {
         Optional<UserAccount> optional = accountRepository.findById(id);
