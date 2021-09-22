@@ -2,7 +2,6 @@ package com.rmaciel.assetmanagement.user.endpoints.controllers.forms;
 
 import com.rmaciel.academy.core.models.User;
 import com.rmaciel.academy.core.models.UserStatus;
-import com.rmaciel.academy.core.specifications.UserSpecifications;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
