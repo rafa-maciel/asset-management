@@ -23,6 +23,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.cors()
                 .and().authorizeRequests()
+                .antMatchers("/swagger-ui/**").permitAll()
                 .anyRequest().hasRole(UserAccountProfile.ADMIN.toString())
                 .and().csrf().disable()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)

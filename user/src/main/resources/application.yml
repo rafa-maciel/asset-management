@@ -1,9 +1,9 @@
 spring:
   application:
-    name: user-services
+    name: user-service
 
 server:
-  port: 0
+  port: 8086
 
 eureka:
   client:

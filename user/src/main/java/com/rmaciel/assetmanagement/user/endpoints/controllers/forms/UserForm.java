@@ -18,7 +18,7 @@ public class UserForm {
     @NotNull
     private Integer re;
 
-    @NotNull @NotEmpty @Length(min = 3, max = 20)
+    @NotNull @NotEmpty @Length(min = 1, max = 50)
     private String department;
 
     @NotNull

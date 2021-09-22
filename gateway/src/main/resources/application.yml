@@ -21,9 +21,9 @@ spring:
           predicates:
             - Path=/accounts/**
         - id: user-service
-            uri: lb://USER-SERVICE
-            predicates:
-              - Path=/users/**
+          uri: lb://USER-SERVICE
+          predicates:
+            - Path=/users/**
 server:
   port: 8080
 eureka:

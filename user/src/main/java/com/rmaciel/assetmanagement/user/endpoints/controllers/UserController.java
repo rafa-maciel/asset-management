@@ -25,10 +25,10 @@ public class UserController {
         this.userRepository = userRepository;
     }
 
-    private User findUserOrRunException(Long id) throws NotFoundException {
+    private User findUserOrNull(Long id) {
         Optional<User> optionalUser = userRepository.findById(id);
         if (optionalUser.isEmpty())
-            throw new NotFoundException("User has not been found by id: " + id);
+            return null;
 
         return optionalUser.get();
     }
@@ -40,22 +40,28 @@ public class UserController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<User> update(@PathVariable Long id, @RequestBody @Valid UserForm form) throws NotFoundException {
-        User savedUser = findUserOrRunException(id);
+    public ResponseEntity<User> update(@PathVariable Long id, @RequestBody @Valid UserForm form) {
+        User savedUser = findUserOrNull(id);
+        if (savedUser == null) return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+
         User user = userRepository.save(form.updateFrom(savedUser));
         return ResponseEntity.ok(user);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> delete(@PathVariable Long id) throws NotFoundException {
-        User user = findUserOrRunException(id);
+    public ResponseEntity<?> delete(@PathVariable Long id) {
+        User user = findUserOrNull(id);
+        if (user == null) return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+
         userRepository.delete(user);
         return ResponseEntity.ok().build();
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<User> details(@PathVariable Long id) throws NotFoundException {
-        User user = findUserOrRunException(id);
+    public ResponseEntity<User> details(@PathVariable Long id) {
+        User user = findUserOrNull(id);
+        if (user == null) return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+
         return ResponseEntity.ok(user);
     }
 
