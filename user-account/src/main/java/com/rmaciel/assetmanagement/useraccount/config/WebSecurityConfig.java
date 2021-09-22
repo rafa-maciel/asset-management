@@ -24,6 +24,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http.cors()
                 .and().authorizeRequests()
                 .antMatchers("/swagger-ui/**").permitAll()
+                .antMatchers("/v2/**").permitAll()
+                .antMatchers("/swagger-resources/**").permitAll()
                 .anyRequest().hasRole(UserAccountProfile.ADMIN.toString())
                 .and().csrf().disable()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
