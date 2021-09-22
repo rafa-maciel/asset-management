@@ -2,7 +2,6 @@ package com.rmaciel.assetmanagement.useraccount.endpoints.controllers;
 
 import com.rmaciel.academy.core.models.UserAccount;
 import com.rmaciel.academy.core.repositories.UserAccountRepository;
-import com.rmaciel.academy.core.specifications.UserAccountSpecification;
 import com.rmaciel.assetmanagement.useraccount.endpoints.controllers.forms.UserAccountForm;
 import com.rmaciel.assetmanagement.useraccount.endpoints.controllers.forms.UserAccountSearchForm;
 import javassist.NotFoundException;
@@ -15,8 +14,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
 
 @RestController

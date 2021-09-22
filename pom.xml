@@ -25,6 +25,7 @@
         <module>token</module>
         <module>auth</module>
         <module>user-account</module>
+        <module>user</module>
     </modules>
 
     <properties>
