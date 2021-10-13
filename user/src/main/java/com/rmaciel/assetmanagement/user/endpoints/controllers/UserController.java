@@ -13,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -63,6 +64,17 @@ public class UserController {
         if (user == null) return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
 
         return ResponseEntity.ok(user);
+    }
+
+    @PostMapping("/import")
+    public ResponseEntity<?> importUsers(@RequestBody @Valid List<UserForm> listForm) {
+        System.out.println(listForm);
+        if(listForm != null)
+            listForm.forEach(form -> {
+                if (form != null) userRepository.save(form.build());
+            });
+
+        return ResponseEntity.ok().build();
     }
 
     @GetMapping("/search")
