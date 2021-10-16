@@ -26,6 +26,7 @@
         <module>auth</module>
         <module>user-account</module>
         <module>user</module>
+        <module>model</module>
     </modules>
 
     <properties>
