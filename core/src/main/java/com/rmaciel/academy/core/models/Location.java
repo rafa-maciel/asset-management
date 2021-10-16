@@ -27,6 +27,6 @@ public class Location {
     @NonNull
     private String title;
 
-    @Length(min = 2, max = 120) @NonNull
+    @Length(min = 0, max = 120) @NonNull
     private String notes;
 }

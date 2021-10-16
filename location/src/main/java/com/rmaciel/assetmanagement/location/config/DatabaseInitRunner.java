@@ -1,8 +1,10 @@
 package com.rmaciel.assetmanagement.location.config;
 
+import com.rmaciel.academy.core.models.Location;
 import com.rmaciel.academy.core.models.Model;
 import com.rmaciel.academy.core.models.UserAccount;
 import com.rmaciel.academy.core.models.UserAccountProfile;
+import com.rmaciel.academy.core.repositories.LocationRepository;
 import com.rmaciel.academy.core.repositories.ModelRepository;
 import com.rmaciel.academy.core.repositories.UserAccountRepository;
 import lombok.ToString;
@@ -14,12 +16,12 @@ import org.springframework.stereotype.Component;
 @Slf4j
 @ToString
 public class DatabaseInitRunner implements CommandLineRunner {
-    private final ModelRepository modelRepository;
+    private final LocationRepository locationRepository;
     private final UserAccountRepository userAccountRepository;
 
 
-    public DatabaseInitRunner(ModelRepository modelRepository, UserAccountRepository userAccountRepository) {
-        this.modelRepository = modelRepository;
+    public DatabaseInitRunner(LocationRepository modelRepository, UserAccountRepository userAccountRepository) {
+        this.locationRepository = modelRepository;
         this.userAccountRepository = userAccountRepository;
     }
 
@@ -29,10 +31,10 @@ public class DatabaseInitRunner implements CommandLineRunner {
                 this.userAccountRepository.save(new UserAccount("rafa@rafa.com", "Rafa", "rafa123", true, UserAccountProfile.ADMIN)).toString()
         );
         log.info(
-                this.modelRepository.save(new Model("Elitebook 840 G3", "HP", "Notebook")).toString()
+                this.locationRepository.save(new Location("Itaquera", "Armazem de Peças")).toString()
         );
         log.info(
-                this.modelRepository.save(new Model("Ultraboook 7480", "DELL", "Notebook")).toString()
+                this.locationRepository.save(new Location("Mooca", "Loja de revenda")).toString()
         );
     }
 }
