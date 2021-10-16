@@ -27,6 +27,7 @@
         <module>user-account</module>
         <module>user</module>
         <module>model</module>
+        <module>location</module>
     </modules>
 
     <properties>
