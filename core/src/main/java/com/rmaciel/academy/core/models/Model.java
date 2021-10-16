@@ -1,9 +1,6 @@
 package com.rmaciel.academy.core.models;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
 import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.Entity;
@@ -17,18 +14,19 @@ import javax.validation.constraints.NotNull;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@RequiredArgsConstructor
 @ToString
 public class Model {
 
     @Id @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @NotEmpty @NotNull @Length(min = 2, max = 30)
+    @NotEmpty @NotNull @Length(min = 2, max = 30) @NonNull
     private String title;
 
-    @NotEmpty @NotNull @Length(min = 2, max = 30)
+    @NotEmpty @NotNull @Length(min = 2, max = 30) @NonNull
     private String brand;
 
-    @NotEmpty @NotNull @Length(min = 2, max = 30)
+    @NotEmpty @NotNull @Length(min = 2, max = 30) @NonNull
     private String type;
 }
