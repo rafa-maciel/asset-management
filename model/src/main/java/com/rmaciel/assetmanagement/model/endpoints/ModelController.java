@@ -4,7 +4,6 @@ import com.rmaciel.academy.core.models.Model;
 import com.rmaciel.academy.core.repositories.ModelRepository;
 import com.rmaciel.assetmanagement.model.endpoints.forms.ModelForm;
 import com.rmaciel.assetmanagement.model.endpoints.forms.ModelSearchForm;
-import org.dom4j.rule.Mode;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
@@ -13,7 +12,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import javax.ws.rs.Path;
 import java.util.Optional;
 
 @RestController
