@@ -10,6 +10,7 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@RequiredArgsConstructor
 @ToString
 public class Asset {
 
@@ -18,14 +19,17 @@ public class Asset {
 
     @ManyToOne
     @JoinColumn(name = "owner_id")
+    @NonNull
     private User owner;
 
     @ManyToOne
     @JoinColumn(name = "location_id")
+    @NonNull
     private Location location;
 
     @ManyToOne
     @JoinColumn(name = "model_id")
+    @NonNull
     private Model model;
 
     @OneToMany(mappedBy = "asset", orphanRemoval = true, fetch = FetchType.LAZY)
@@ -41,6 +45,7 @@ public class Asset {
     private String companyIdentification;
 
     @Enumerated(EnumType.STRING)
+    @NonNull
     private AssetStatus status;
 
     @Length(max = 60)
