@@ -32,6 +32,10 @@ spring:
           uri: lb://LOCATION-SERVICE
           predicates:
             - Path=/locations/**
+        - id: asset-service
+          uri: lb://ASSET-SERVICE
+          predicates:
+            - Path=/assets/**
 server:
   port: 8080
 eureka:
