@@ -14,7 +14,7 @@ public class LocationForm {
     @NotEmpty @NotNull @Length(min = 2, max = 30)
     private String title;
 
-    @Length(min = 2, max = 120)
+    @Length(max = 120)
     private String notes;
 
     public Location build() {
