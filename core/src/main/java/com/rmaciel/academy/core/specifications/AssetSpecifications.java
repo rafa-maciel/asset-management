@@ -18,6 +18,22 @@ public abstract class AssetSpecifications {
         };
     }
 
+    public static Specification<Asset> likeOwnerName(String ownerName) {
+        return (Root<Asset> root, CriteriaQuery<?> criteriaQuery, CriteriaBuilder criteriaBuilder) -> {
+            if (ownerName == null || ownerName.isEmpty()) return null;
+
+            return criteriaBuilder.like(root.get("owner").get("name"), "%" + ownerName + "%");
+        };
+    }
+
+    public static Specification<Asset> equalOwnerRE(Integer ownerRe) {
+        return (Root<Asset> root, CriteriaQuery<?> criteriaQuery, CriteriaBuilder criteriaBuilder) -> {
+            if (ownerRe == null || ownerRe < 1) return null;
+
+            return criteriaBuilder.equal(root.get("owner").get("re"), ownerRe);
+        };
+    }
+
     public static Specification<Asset> equalLocation(Long locationId) {
         return (Root<Asset> root, CriteriaQuery<?> criteriaQuery, CriteriaBuilder criteriaBuilder) -> {
             if (locationId == null || locationId < 1) return null;
@@ -26,11 +42,27 @@ public abstract class AssetSpecifications {
         };
     }
 
+    public static Specification<Asset> likeLocationTitle(String locationTitle) {
+        return (Root<Asset> root, CriteriaQuery<?> criteriaQuery, CriteriaBuilder criteriaBuilder) -> {
+            if (locationTitle == null || locationTitle.isEmpty()) return null;
+
+            return criteriaBuilder.like(root.get("location").get("title"), "%" + locationTitle + "%");
+        };
+    }
+
     public static Specification<Asset> equalModel(Long modelId) {
         return (Root<Asset> root, CriteriaQuery<?> criteriaQuery, CriteriaBuilder criteriaBuilder) -> {
             if (modelId == null || modelId < 1) return null;
 
             return criteriaBuilder.equal(root.get("model"), modelId);
+        };
+    }
+
+    public static Specification<Asset> likeModelTitle(String modelTitle) {
+        return (Root<Asset> root, CriteriaQuery<?> criteriaQuery, CriteriaBuilder criteriaBuilder) -> {
+            if (modelTitle == null || modelTitle.isEmpty()) return null;
+
+            return criteriaBuilder.like(root.get("model").get("title"), "%" + modelTitle + "%");
         };
     }
 

@@ -13,8 +13,12 @@ import static com.rmaciel.academy.core.specifications.AssetSpecifications.*;
 @AllArgsConstructor
 public class AssetSearchForm {
     private Long ownerId;
+    private String ownerName;
+    private Integer ownerRe;
     private Long locationId;
+    private String locationTitle;
     private Long modelId;
+    private String modelTitle;
     private Long contractNumber;
     private String contractVendor;
     private String contractVendorCNPJ;
@@ -25,8 +29,12 @@ public class AssetSearchForm {
 
     public Specification<Asset> buildSpecs() {
         Specification<Asset> specs = equalOwner(ownerId)
+                .and(likeOwnerName(ownerName))
+                .and(equalOwnerRE(ownerRe))
                 .and(equalLocation(locationId))
+                .and(likeLocationTitle(locationTitle))
                 .and(equalModel(modelId))
+                .and(likeModelTitle(modelTitle))
                 .and(equalContractNumber(contractNumber))
                 .and(likeContractVendor(contractVendor))
                 .and(equalContractVendorCNPJ(contractVendorCNPJ))
