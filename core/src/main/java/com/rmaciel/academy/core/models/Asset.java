@@ -42,6 +42,7 @@ public class Asset {
     private Contract contract;
 
     @Length(max = 60)
+    @NonNull
     private String companyIdentification;
 
     @Enumerated(EnumType.STRING)

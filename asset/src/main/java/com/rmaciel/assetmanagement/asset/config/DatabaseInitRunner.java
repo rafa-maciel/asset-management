@@ -43,10 +43,10 @@ public class DatabaseInitRunner implements CommandLineRunner {
         log.info(model.toString());
 
         log.info(
-                this.assetRepository.save(new Asset(owner, location, model, AssetStatus.ACTIVE)).toString()
+                this.assetRepository.save(new Asset(owner, location, model, "PE66531" ,AssetStatus.ACTIVE)).toString()
         );
         log.info(
-                this.assetRepository.save(new Asset(owner, location, model, AssetStatus.BROKEN)).toString()
+                this.assetRepository.save(new Asset(owner, location, model,"LT5454641", AssetStatus.BROKEN)).toString()
         );
     }
 }
