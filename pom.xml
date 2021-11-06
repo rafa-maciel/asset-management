@@ -28,6 +28,7 @@
         <module>user</module>
         <module>model</module>
         <module>location</module>
+        <module>asset</module>
     </modules>
 
     <properties>
