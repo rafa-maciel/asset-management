@@ -1,5 +1,6 @@
 package com.rmaciel.academy.core.models;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.*;
 
 import javax.persistence.*;
@@ -9,6 +10,7 @@ import java.time.LocalDate;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@RequiredArgsConstructor
 @ToString
 public class Contract {
 
@@ -17,16 +19,25 @@ public class Contract {
 
     @ManyToOne(optional = false)
     @JoinColumn(name = "asset_id")
+    @NonNull
     private Asset asset;
 
+    @NonNull
     private Long number;
+
+    @NonNull
     private String vendor;
+    @NonNull
     private String vendorCNPJ;
 
-    @Column( columnDefinition = "TIMESTAMP")
+    @NonNull
+    @Column( columnDefinition = "DATE")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy")
     private LocalDate startsAt;
 
-    @Column( columnDefinition = "TIMESTAMP")
+    @NonNull
+    @Column( columnDefinition = "DATE")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy")
     private LocalDate endsAt;
 
     @OneToOne(optional = false, orphanRemoval = true)

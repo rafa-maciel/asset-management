@@ -1,3 +1,4 @@
+
 package com.rmaciel.academy.gateway;
 
 import org.springframework.boot.SpringApplication;

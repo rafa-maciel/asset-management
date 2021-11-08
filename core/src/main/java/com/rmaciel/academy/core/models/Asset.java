@@ -38,7 +38,7 @@ public class Asset {
     @OneToMany(mappedBy = "asset", orphanRemoval = true, fetch = FetchType.LAZY)
     private List<File> files;
 
-    @OneToOne(mappedBy = "asset", fetch = FetchType.LAZY, optional = false, orphanRemoval = true)
+    @OneToOne(mappedBy = "asset", fetch = FetchType.LAZY, optional = false, orphanRemoval = true, cascade = CascadeType.PERSIST)
     private Contract contract;
 
     @Length(max = 60)

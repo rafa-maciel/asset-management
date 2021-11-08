@@ -32,7 +32,7 @@ public class DatabaseInitRunner implements CommandLineRunner {
                 this.userRepository.save(new User("Tony Stark", 33251, "Engenharia", UserStatus.ACTIVE, "Incontrolavel")).toString()
         );
         log.info(
-                this.userRepository.save(new User("Peter Park", 33251, "Inovação", UserStatus.ACTIVE, "constantes atrasos")).toString()
+                this.userRepository.save(new User("Peter Park", 33252, "Inovação", UserStatus.ACTIVE, "constantes atrasos")).toString()
         );
     }
 }

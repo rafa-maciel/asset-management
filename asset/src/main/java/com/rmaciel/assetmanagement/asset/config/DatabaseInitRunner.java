@@ -34,13 +34,23 @@ public class DatabaseInitRunner implements CommandLineRunner {
         log.info(
                 this.userAccountRepository.save(new UserAccount("rafa@rafa.com", "Rafa", "rafa123", true, UserAccountProfile.ADMIN)).toString()
         );
-        User owner = userRepository.save(new User("Robert Wilson", 116542, "Marketing", UserStatus.ACTIVE, ""));
-        Location location = locationRepository.save(new Location("Vila Madalena", "Escritório Central"));
-        Model model = modelRepository.save(new Model("Elitebook 8470p", "Dell", "Notebook"));
+        User owner = userRepository.save(new User("Tony Stark", 33251, "Engenharia", UserStatus.ACTIVE, "Incontrolavel"));
+        Location location = this.locationRepository.save(new Location("Itaquera", "Armazem de Peças"));
+        Model model = modelRepository.save(new Model("Elitebook 840 G3", "HP", "Notebook"));
 
         log.info(owner.toString());
         log.info(location.toString());
         log.info(model.toString());
+
+        log.info(
+                this.locationRepository.save(new Location("Mooca", "Loja de revenda")).toString()
+        );
+        log.info(
+                this.modelRepository.save(new Model("Ultraboook 7480", "DELL", "Notebook")).toString()
+        );
+        log.info(
+                this.userRepository.save(new User("Peter Park", 33251, "Inovação", UserStatus.ACTIVE, "constantes atrasos")).toString()
+        );
 
         log.info(
                 this.assetRepository.save(new Asset(owner, location, model, "PE66531" ,AssetStatus.ACTIVE)).toString()
