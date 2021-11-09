@@ -1,5 +1,6 @@
 package com.rmaciel.academy.core.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import org.hibernate.validator.constraints.Length;
 
@@ -33,12 +34,15 @@ public class Asset {
     private Model model;
 
     @OneToMany(mappedBy = "asset", orphanRemoval = true, fetch = FetchType.LAZY)
+    @JsonIgnore
     private List<Note> notes;
 
     @OneToMany(mappedBy = "asset", orphanRemoval = true, fetch = FetchType.LAZY)
+    @JsonIgnore
     private List<File> files;
 
     @OneToOne(mappedBy = "asset", fetch = FetchType.LAZY, optional = false, orphanRemoval = true, cascade = CascadeType.PERSIST)
+    @JsonIgnore
     private Contract contract;
 
     @Length(max = 60)
