@@ -68,9 +68,11 @@ public class ContractController {
     @DeleteMapping("/{contractId}")
     public ResponseEntity<?> delete(@PathVariable("contractId") Long id) {
         Contract contract = findOrNull(id);
+        log.info(contract.getVendor());
         if (contract == null) return ResponseEntity.badRequest().build();
 
         contractRepository.delete(contract);
+        log.info(findOrNull(id).getVendor());
         return ResponseEntity.ok().build();
     }
 }

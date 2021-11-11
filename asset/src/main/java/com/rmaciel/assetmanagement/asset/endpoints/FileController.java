@@ -5,9 +5,14 @@ import com.rmaciel.academy.core.models.File;
 import com.rmaciel.academy.core.repositories.AssetRepository;
 import com.rmaciel.academy.core.repositories.FileRepository;
 import com.rmaciel.academy.core.services.FileManagerService;
+import com.rmaciel.academy.core.utils.StorageFile;
 import com.rmaciel.assetmanagement.asset.endpoints.forms.FileForm;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.core.io.ByteArrayResource;
+import org.springframework.core.io.Resource;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -76,6 +81,19 @@ public class FileController {
     public ResponseEntity<Iterable<File>> findAll(@PathVariable Long assetId) {
         Iterable<File> files = fileRepository.findAllByAssetId(assetId);
         return ResponseEntity.ok(files);
+    }
+
+    @GetMapping("/{fileId}")
+    public ResponseEntity<Resource> download(@PathVariable Long fileId) throws IOException {
+        Optional<File> optionalFile = fileRepository.findById(fileId);
+        if (optionalFile.isEmpty()) return ResponseEntity.badRequest().build();
+
+        StorageFile file = fileService.storageFile(optionalFile.get().getUri());
+
+        return ResponseEntity.ok()
+                .contentType(MediaType.APPLICATION_OCTET_STREAM)
+                .header("Content-Type", file.getFileName())
+                .body(file.getResource());
     }
 
 }

@@ -1,6 +1,8 @@
 package com.rmaciel.academy.core.services;
 
+import com.rmaciel.academy.core.utils.StorageFile;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.ByteArrayResource;
 import org.springframework.stereotype.Service;
 
 import java.io.File;
@@ -27,6 +29,10 @@ public class FileManagerService {
 
     public void deleteFile(String absolutFilename) throws IOException {
         Files.delete(Paths.get(absolutFilename));
+    }
+
+    public StorageFile storageFile(String absolutFilename) throws IOException {
+        return new StorageFile(absolutFilename);
     }
 
 }
