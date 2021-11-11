@@ -9,7 +9,7 @@ import java.time.LocalDate;
 
 @AllArgsConstructor
 @Getter
-public class AssetContractForm {
+public class ContractForm {
     private Long number;
     private String vendor;
     private String vendorCNPJ;
@@ -18,5 +18,15 @@ public class AssetContractForm {
 
     public Contract build(Asset asset) {
         return new Contract(asset, number, vendor, vendorCNPJ, startsAt, endsAt);
+    }
+
+    public Contract updateFrom(Contract contract) {
+        contract.setNumber(number);
+        contract.setVendor(vendor);
+        contract.setVendorCNPJ(vendorCNPJ);
+        contract.setStartsAt(startsAt);
+        contract.setEndsAt(endsAt);
+
+        return contract;
     }
 }

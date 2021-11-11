@@ -1,6 +1,7 @@
 package com.rmaciel.academy.core.models;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;
@@ -20,6 +21,7 @@ public class Contract {
     @ManyToOne(optional = false)
     @JoinColumn(name = "asset_id")
     @NonNull
+    @JsonIgnore
     private Asset asset;
 
     @NonNull
@@ -40,7 +42,7 @@ public class Contract {
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy")
     private LocalDate endsAt;
 
-    @OneToOne(optional = false, orphanRemoval = true)
+    @OneToOne(optional = true, orphanRemoval = true)
     @JoinColumn(name = "file_id")
     private File file;
 

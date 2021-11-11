@@ -27,7 +27,7 @@ public class AssetImportForm {
     private AssetOwnerForm owner;
     private AssetModelForm model;
     private AssetLocationForm location;
-    private AssetContractForm contract;
+    private ContractForm contract;
 
     public Asset build() {
         Asset asset = new Asset(owner.build(), location.build(), model.build(), companyIdentification, status);

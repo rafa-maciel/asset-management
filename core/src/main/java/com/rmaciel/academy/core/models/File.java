@@ -11,6 +11,7 @@ import javax.validation.constraints.NotNull;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@RequiredArgsConstructor
 @ToString
 public class File {
     @Id @GeneratedValue(strategy = GenerationType.AUTO)
@@ -18,10 +19,14 @@ public class File {
 
     @ManyToOne(optional = false)
     @JoinColumn(name = "asset_id")
+    @NonNull
     private Asset asset;
 
     @NotNull @NotEmpty @Length(min = 2, max = 30)
+    @NonNull
     private String name;
+    @NonNull
     private String note;
+    @NonNull
     private String uri;
 }

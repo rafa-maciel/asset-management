@@ -12,7 +12,7 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 @EnableEurekaClient
 @EntityScan("com.rmaciel.academy.core.models")
 @EnableJpaRepositories("com.rmaciel.academy.core.repositories")
-@ComponentScan({"com.rmaciel.academy.token", "com.rmaciel.assetmanagement.asset"})
+@ComponentScan({"com.rmaciel.academy.token", "com.rmaciel.assetmanagement.asset", "com.rmaciel.academy.core.services"})
 @EnableSwagger2
 public class AssetApplication {
 

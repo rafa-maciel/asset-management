@@ -12,6 +12,7 @@ import java.time.LocalDateTime;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@RequiredArgsConstructor
 @ToString
 public class Note {
     @Id @GeneratedValue(strategy = GenerationType.AUTO)
@@ -19,16 +20,19 @@ public class Note {
 
     @ManyToOne(optional = false)
     @JoinColumn(name = "asset_id")
+    @NonNull
     private Asset asset;
 
     @Column( columnDefinition = "TIMESTAMP")
     private LocalDateTime date;
 
     @NotNull @NotEmpty @Length(min = 2, max = 180)
+    @NonNull
     private String text;
 
     @ManyToOne(optional = false)
     @JoinColumn(name = "author_id")
+    @NonNull
     private UserAccount author;
 
     @PrePersist
