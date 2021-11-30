@@ -1,5 +1,7 @@
 package com.rmaciel.academy.gateway.config;
 
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpHeaders;
@@ -10,20 +12,13 @@ import org.springframework.web.reactive.config.CorsRegistry;
 import org.springframework.web.reactive.config.WebFluxConfigurer;
 
 import java.util.Arrays;
+import java.util.List;
 
 @Configuration
+@Slf4j
 public class CorsConfig implements WebFluxConfigurer {
-
-//    @Override
-//    public void addCorsMappings(CorsRegistry registry) {
-//        registry.addMapping("/**")
-//                .allowCredentials(true)
-//                .allowedOrigins("*")
-//                .allowedHeaders("*")
-//                .allowedMethods("*");
-////                .exposedHeaders(HttpHeaders.SET_COOKIE);
-//    }
-
+    @Value("${assetmanagement.navigation.cors.origin}")
+    private List<String> origins;
 
     @Bean
     public CorsWebFilter corsWebFilter() {
@@ -32,8 +27,11 @@ public class CorsConfig implements WebFluxConfigurer {
         corsConfiguration.setAllowCredentials(true);
         corsConfiguration.addAllowedHeader("*");
         corsConfiguration.addAllowedMethod("*");
-        corsConfiguration.addAllowedOrigin("http://localhost:3000");
-//        corsConfiguration.addExposedHeader(HttpHeaders.SET_COOKIE);
+
+        origins.forEach(origin -> {
+            log.info("Adding the origion " + origin);
+            corsConfiguration.addAllowedOrigin(origin);
+        });
 
 
         UrlBasedCorsConfigurationSource corsSource = new UrlBasedCorsConfigurationSource();

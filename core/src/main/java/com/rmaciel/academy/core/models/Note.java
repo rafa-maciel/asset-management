@@ -23,7 +23,7 @@ public class Note {
     @NonNull
     private Asset asset;
 
-    @Column( columnDefinition = "TIMESTAMP")
+    @Column( columnDefinition = "DATETIME")
     private LocalDateTime date;
 
     @NotNull @NotEmpty @Length(min = 2, max = 180)

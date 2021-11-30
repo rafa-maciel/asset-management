@@ -11,6 +11,7 @@ import javax.validation.constraints.NotNull;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
+@Table(name = "userowner")
 public class User {
 
     @Id

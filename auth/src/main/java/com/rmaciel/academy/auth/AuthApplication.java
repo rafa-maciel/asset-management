@@ -1,5 +1,6 @@
 package com.rmaciel.academy.auth;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
@@ -17,12 +18,15 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @EnableEurekaClient
 public class AuthApplication {
 
+    @Value("${assetmanagement.navigation.cors.origin}")
+    private String[] origins;
+
     @Bean
     public WebMvcConfigurer corsConfigurer() {
         return new WebMvcConfigurer() {
             @Override
             public void addCorsMappings(CorsRegistry registry) {
-                registry.addMapping("/*").allowedOrigins("http://localhost:3000");
+                registry.addMapping("/*").allowedOrigins(origins);
             }
         };
     }

@@ -13,6 +13,7 @@ import javax.validation.constraints.NotNull;
 @NoArgsConstructor
 @RequiredArgsConstructor
 @ToString
+@Table(name = "assetFiles")
 public class File {
     @Id @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;

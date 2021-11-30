@@ -18,7 +18,6 @@
     <packaging>pom</packaging>
 
     <modules>
-        <module>books</module>
         <module>core</module>
         <module>discovery</module>
         <module>gateway</module>
