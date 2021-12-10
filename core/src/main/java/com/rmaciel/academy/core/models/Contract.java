@@ -6,6 +6,7 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.List;
 
 @Entity
 @Data
@@ -18,11 +19,9 @@ public class Contract {
     @Id @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @ManyToOne(optional = false)
-    @JoinColumn(name = "asset_id")
-    @NonNull
+    @OneToMany(mappedBy = "contract", orphanRemoval = false, fetch = FetchType.LAZY)
     @JsonIgnore
-    private Asset asset;
+    private List<Asset> asset;
 
     @NonNull
     private Long number;

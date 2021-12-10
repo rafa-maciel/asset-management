@@ -41,7 +41,7 @@ public class Asset {
     @JsonIgnore
     private List<File> files;
 
-    @OneToOne(mappedBy = "asset", fetch = FetchType.LAZY, optional = false, orphanRemoval = true, cascade = CascadeType.PERSIST)
+    @ManyToOne(fetch = FetchType.LAZY)
     private Contract contract;
 
     @Length(max = 60)

@@ -28,6 +28,7 @@
         <module>model</module>
         <module>location</module>
         <module>asset</module>
+        <module>contract</module>
     </modules>
 
     <properties>
