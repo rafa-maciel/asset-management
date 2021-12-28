@@ -44,6 +44,9 @@ public class Asset {
     @ManyToOne(fetch = FetchType.LAZY)
     private Contract contract;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Invoice invoice;
+
     @Length(max = 60)
     @NonNull
     private String companyIdentification;
