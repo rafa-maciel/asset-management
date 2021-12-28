@@ -61,4 +61,11 @@ public class Asset {
     @Length(max = 60)
     private String lineIdentification;
 
+    @Length(max = 30)
+    private String hostname;
+    @Length(max = 30)
+    private String serialNumber;
+    @Length(max = 30)
+    private String tag;
+
 }
