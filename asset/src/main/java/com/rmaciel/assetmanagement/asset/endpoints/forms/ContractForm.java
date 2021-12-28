@@ -17,7 +17,7 @@ public class ContractForm {
     private LocalDate endsAt;
 
     public Contract build(Asset asset) {
-        return new Contract(asset, number, vendor, vendorCNPJ, startsAt, endsAt);
+        return new Contract(number, vendor, vendorCNPJ, startsAt, endsAt);
     }
 
     public Contract updateFrom(Contract contract) {
