@@ -29,6 +29,7 @@
         <module>location</module>
         <module>asset</module>
         <module>contract</module>
+        <module>invoice</module>
     </modules>
 
     <properties>
