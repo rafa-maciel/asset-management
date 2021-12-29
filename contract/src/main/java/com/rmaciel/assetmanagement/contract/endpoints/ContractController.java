@@ -1,6 +1,7 @@
 package com.rmaciel.assetmanagement.contract.endpoints;
 
 import com.rmaciel.academy.core.models.Contract;
+import com.rmaciel.academy.core.models.Location;
 import com.rmaciel.academy.core.repositories.ContractRepository;
 import com.rmaciel.assetmanagement.contract.endpoints.forms.ContractForm;
 import com.rmaciel.assetmanagement.contract.endpoints.forms.ContractSearchForm;
@@ -54,6 +55,14 @@ public class ContractController {
         Page<Contract> page = contractRepository.findAll(specs, pageable);
 
         return ResponseEntity.ok(page);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<Contract> details(@PathVariable Long id) {
+        Contract contract = findOrNull(id);
+        if (contract == null) return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+
+        return ResponseEntity.ok(contract);
     }
 
     @DeleteMapping("/{contractId}")
