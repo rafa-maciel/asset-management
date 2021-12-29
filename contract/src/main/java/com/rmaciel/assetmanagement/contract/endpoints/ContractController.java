@@ -72,7 +72,6 @@ public class ContractController {
         if (contract == null) return ResponseEntity.badRequest().build();
 
         contractRepository.delete(contract);
-        log.info(findOrNull(id).getVendor());
         return ResponseEntity.ok().build();
     }
 }
