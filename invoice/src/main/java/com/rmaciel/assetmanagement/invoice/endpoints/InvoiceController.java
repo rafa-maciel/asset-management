@@ -48,6 +48,14 @@ public class InvoiceController {
         return ResponseEntity.ok(updatedInvoice);
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<Invoice> details(@PathVariable Long id) {
+        Invoice invoice = findOrNull(id);
+        if (invoice == null) return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+
+        return ResponseEntity.ok(invoice);
+    }
+
     @GetMapping("/search")
     public ResponseEntity<Page<Invoice>> search(Pageable pageable, @Valid InvoiceSearchForm form) {
         Specification<Invoice> specs = form.buildSpecs();
@@ -63,7 +71,6 @@ public class InvoiceController {
         if (invoice == null) return ResponseEntity.badRequest().build();
 
         invoiceRepository.delete(invoice);
-        log.info(findOrNull(id).getVendor());
         return ResponseEntity.ok().build();
     }
 }
