@@ -41,10 +41,12 @@ public class Asset {
     @JsonIgnore
     private List<File> files;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
+    @JoinColumn(name = "contract_id")
     private Contract contract;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
+    @JoinColumn(name = "invoice_id")
     private Invoice invoice;
 
     @Length(max = 60)
