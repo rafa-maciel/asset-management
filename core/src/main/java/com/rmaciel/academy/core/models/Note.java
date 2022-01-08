@@ -26,7 +26,7 @@ public class Note {
     @Column( columnDefinition = "DATETIME")
     private LocalDateTime date;
 
-    @NotNull @NotEmpty @Length(min = 2, max = 180)
+    @NotNull @NotEmpty @Length(min = 2, max = 800)
     @NonNull
     private String text;
 

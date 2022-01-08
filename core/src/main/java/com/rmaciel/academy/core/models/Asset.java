@@ -12,7 +12,6 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @RequiredArgsConstructor
-@ToString
 public class Asset {
 
     @Id @GeneratedValue(strategy = GenerationType.AUTO)
@@ -33,7 +32,7 @@ public class Asset {
     @NonNull
     private Model model;
 
-    @OneToMany(mappedBy = "asset", orphanRemoval = true, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "asset", orphanRemoval = true, fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
     @JsonIgnore
     private List<Note> notes;
 
@@ -70,4 +69,22 @@ public class Asset {
     @Length(max = 30)
     private String tag;
 
+    @Override
+    public String toString() {
+        return "Asset{" +
+                "id=" + id +
+                ", owner=" + owner.getName() +
+                ", location=" + location.getTitle() +
+                ", model=" + model.getTitle() +
+                ", contract=" + contract.getNumber() +
+                ", invoice=" + invoice.getNumber() +
+                ", companyIdentification='" + companyIdentification + '\'' +
+                ", status=" + status +
+                ", chipIdentification='" + chipIdentification + '\'' +
+                ", lineIdentification='" + lineIdentification + '\'' +
+                ", hostname='" + hostname + '\'' +
+                ", serialNumber='" + serialNumber + '\'' +
+                ", tag='" + tag + '\'' +
+                '}';
+    }
 }

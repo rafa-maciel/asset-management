@@ -2,6 +2,8 @@ package com.rmaciel.assetmanagement.asset.endpoints;
 
 import com.rmaciel.academy.core.models.Asset;
 import com.rmaciel.academy.core.models.Location;
+import com.rmaciel.academy.core.models.Note;
+import com.rmaciel.academy.core.models.UserAccount;
 import com.rmaciel.academy.core.repositories.*;
 import com.rmaciel.academy.core.specifications.LocationSpecifications;
 import com.rmaciel.assetmanagement.asset.endpoints.forms.AssetForm;
@@ -13,6 +15,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -30,19 +34,25 @@ public class AssetControler {
     private final ModelRepository modelRepository;
     private final ContractRepository contractRepository;
     private final InvoiceRepository invoiceRepository;
+    private final UserAccountRepository userAccountRepository;
+    private final NoteRepository noteRepository;
 
     protected AssetControler(AssetRepository assetRepository,
                              UserRepository userRepository,
                              LocationRepository locationRepository,
                              ModelRepository modelRepository,
                              ContractRepository contractRepository,
-                             InvoiceRepository invoiceRepository) {
+                             InvoiceRepository invoiceRepository,
+                             UserAccountRepository userAccountRepository,
+                             NoteRepository noteRepository) {
         this.assetRepository = assetRepository;
         this.userRepository = userRepository;
         this.locationRepository = locationRepository;
         this.modelRepository = modelRepository;
         this.contractRepository = contractRepository;
         this.invoiceRepository = invoiceRepository;
+        this.userAccountRepository = userAccountRepository;
+        this.noteRepository = noteRepository;
     }
 
     private Asset findAssetOrNull(Long id) {
@@ -51,6 +61,24 @@ public class AssetControler {
             return null;
 
         return assetOptional.get();
+    }
+
+    private String createUpdateNote(String currentAsset, String updatedAsset) {
+        StringBuilder builder = new StringBuilder();
+        builder.append("Ativo atualizado de: " + currentAsset);
+        builder.append(System.getProperty("line.separator"));
+        builder.append("Para: " + updatedAsset);
+
+        log.info(builder.toString());
+
+        return builder.toString();
+    }
+
+    private UserAccount findAuthorOrNull(Authentication auth) {
+        UserDetails userAuth = (UserDetails) auth.getPrincipal();
+        Optional<UserAccount> optionalUser = userAccountRepository.findByEmail(userAuth.getUsername());
+
+        return optionalUser.orElse(null);
     }
 
     @PostMapping
@@ -62,12 +90,23 @@ public class AssetControler {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Asset> update(@PathVariable Long id, @RequestBody @Valid AssetForm form) {
+    public ResponseEntity<Asset> update(@PathVariable Long id, @RequestBody @Valid AssetForm form, Authentication auth) {
         Asset savedAsset = findAssetOrNull(id);
         if (savedAsset == null) return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
 
-        Asset asset = assetRepository.save(form.updateFrom(savedAsset, userRepository, locationRepository,
-                modelRepository, contractRepository, invoiceRepository));
+        log.info("Creating update note");
+        String savedAssetString = savedAsset.toString();
+        log.info(savedAssetString);
+
+
+        Asset updatedAsset = form.updateFrom(savedAsset, userRepository, locationRepository,
+                modelRepository, contractRepository, invoiceRepository);
+
+        String updateNote = createUpdateNote(savedAssetString, updatedAsset.toString());
+        Note note = new Note(updatedAsset, updateNote, findAuthorOrNull(auth));
+        noteRepository.save(note);
+
+        Asset asset = assetRepository.save(updatedAsset);
         return ResponseEntity.ok(asset);
     }
 
