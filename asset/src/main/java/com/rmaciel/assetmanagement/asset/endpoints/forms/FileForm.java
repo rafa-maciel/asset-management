@@ -14,6 +14,9 @@ public class FileForm {
     private MultipartFile file;
 
     public File build(Asset asset, String pathname) {
-        return new File(asset, name, note, pathname);
+        File fileCreated = new File(name, note, pathname);
+        fileCreated.setAsset(asset);
+
+        return file;
     }
 }

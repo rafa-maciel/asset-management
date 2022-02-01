@@ -7,4 +7,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface FileRepository extends CrudRepository<File, Long> {
     Iterable<File> findAllByAssetId(Long id);
+    Iterable<File> findAllByContractId(Long id);
+    Iterable<File> findAllByInvoiceId(Long id);
 }

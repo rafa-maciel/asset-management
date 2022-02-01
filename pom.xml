@@ -30,6 +30,7 @@
         <module>asset</module>
         <module>contract</module>
         <module>invoice</module>
+        <module>file</module>
     </modules>
 
     <properties>

@@ -18,10 +18,17 @@ public class File {
     @Id @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = true)
     @JoinColumn(name = "asset_id")
-    @NonNull
     private Asset asset;
+
+    @ManyToOne(optional = true)
+    @JoinColumn(name = "contract_id")
+    private Contract contract;
+
+    @ManyToOne(optional = true)
+    @JoinColumn(name = "invoice_id")
+    private Invoice invoice;
 
     @NotNull @NotEmpty @Length(min = 2, max = 30)
     @NonNull

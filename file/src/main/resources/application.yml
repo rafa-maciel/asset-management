@@ -1,0 +1,22 @@
+spring:
+  application:
+    name: file-service
+
+server:
+  port: 0
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: ${EUREKA_URI:http://localhost:8081/eureka}
+  instance:
+    preferIpAddress: true
+
+management:
+  endpoint:
+    shutdown:
+      enabled: true
+  endpoints:
+    web:
+      exposure:
+        include:
+          - '*'

@@ -41,8 +41,7 @@ public class Invoice {
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy")
     private LocalDate endsAt;
 
-    @OneToOne(optional = true, orphanRemoval = true)
-    @JoinColumn(name = "file_id")
-    private File file;
-
+    @OneToMany(mappedBy = "invoice", orphanRemoval = true, fetch = FetchType.LAZY)
+    @JsonIgnore
+    private List<File> files;
 }
