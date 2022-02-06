@@ -44,6 +44,10 @@ spring:
           uri: lb://INVOICE-SERVICE
           predicates:
             - Path=/invoices/**
+        - id: file-service
+          uri: lb://FILE-SERVICE
+          predicates:
+            - Path=/files/**
 server:
   port: 8080
 eureka:
