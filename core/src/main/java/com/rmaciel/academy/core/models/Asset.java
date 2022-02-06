@@ -68,6 +68,8 @@ public class Asset {
     private String serialNumber;
     @Length(max = 30)
     private String tag;
+    @Length(max = 30)
+    private String imei;
 
     @Override
     public String toString() {
@@ -85,6 +87,7 @@ public class Asset {
                 ", hostname='" + hostname + '\'' +
                 ", serialNumber='" + serialNumber + '\'' +
                 ", tag='" + tag + '\'' +
+                ", imei='" + imei + '\'' +
                 '}';
     }
 }

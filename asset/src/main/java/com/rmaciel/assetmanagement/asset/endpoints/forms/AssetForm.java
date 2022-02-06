@@ -24,6 +24,7 @@ public class AssetForm {
     private String hostname;
     private String serialNumber;
     private String tag;
+    private String imei;
 
     @Length(max = 60)
     private String companyIdentification;
@@ -60,6 +61,7 @@ public class AssetForm {
         asset.setHostname(hostname);
         asset.setSerialNumber(serialNumber);
         asset.setTag(tag);
+        asset.setImei(imei);
 
         return asset;
     }
@@ -89,6 +91,7 @@ public class AssetForm {
         asset.setHostname(this.hostname);
         asset.setSerialNumber(this.serialNumber);
         asset.setTag(this.tag);
+        asset.setImei(this.imei);
 
         return asset;
     }
