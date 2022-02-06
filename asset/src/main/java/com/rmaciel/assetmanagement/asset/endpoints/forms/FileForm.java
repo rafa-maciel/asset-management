@@ -17,6 +17,6 @@ public class FileForm {
         File fileCreated = new File(name, note, pathname);
         fileCreated.setAsset(asset);
 
-        return file;
+        return fileCreated;
     }
 }
