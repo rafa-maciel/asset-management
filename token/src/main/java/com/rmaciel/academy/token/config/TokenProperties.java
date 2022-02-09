@@ -9,6 +9,7 @@ import org.springframework.context.annotation.Configuration;
 @Data
 public class TokenProperties {
     private final String type = "Bearer";
-    private final Long expirationTime = 60 * 100000L;
+    // 10 Hours
+    private final Long expirationTime = 60 * 1000L * 60 * 10;
     private final String jwtSecret = "1asd63f5as4df65";
 }
