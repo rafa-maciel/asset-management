@@ -1,11 +1,9 @@
 package com.rmaciel.assetmanagement.asset.endpoints;
 
 import com.rmaciel.academy.core.models.Asset;
-import com.rmaciel.academy.core.models.Location;
 import com.rmaciel.academy.core.models.Note;
 import com.rmaciel.academy.core.models.UserAccount;
 import com.rmaciel.academy.core.repositories.*;
-import com.rmaciel.academy.core.specifications.LocationSpecifications;
 import com.rmaciel.assetmanagement.asset.endpoints.forms.AssetForm;
 import com.rmaciel.assetmanagement.asset.endpoints.forms.AssetImportForm;
 import com.rmaciel.assetmanagement.asset.endpoints.forms.AssetSearchForm;
@@ -63,17 +61,6 @@ public class AssetControler {
         return assetOptional.get();
     }
 
-    private String createUpdateNote(String currentAsset, String updatedAsset) {
-        StringBuilder builder = new StringBuilder();
-        builder.append("Ativo atualizado de: " + currentAsset);
-        builder.append(System.getProperty("line.separator"));
-        builder.append("Para: " + updatedAsset);
-
-        log.info(builder.toString());
-
-        return builder.toString();
-    }
-
     private UserAccount findAuthorOrNull(Authentication auth) {
         UserDetails userAuth = (UserDetails) auth.getPrincipal();
         Optional<UserAccount> optionalUser = userAccountRepository.findByEmail(userAuth.getUsername());
@@ -102,9 +89,9 @@ public class AssetControler {
         Asset updatedAsset = form.updateFrom(savedAsset, userRepository, locationRepository,
                 modelRepository, contractRepository, invoiceRepository);
 
-        String updateNote = createUpdateNote(savedAssetString, updatedAsset.toString());
-        Note note = new Note(updatedAsset, updateNote, findAuthorOrNull(auth));
-        noteRepository.save(note);
+        UserAccount author = findAuthorOrNull(auth);
+        noteRepository.save(new Note(updatedAsset, "Atualidado de: " + savedAssetString, author));
+        noteRepository.save(new Note(updatedAsset, "Para: " + updatedAsset.toString(), author));
 
         Asset asset = assetRepository.save(updatedAsset);
         return ResponseEntity.ok(asset);
