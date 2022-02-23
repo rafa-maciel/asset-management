@@ -102,9 +102,9 @@ public class AssetControler {
         Asset updatedAsset = form.updateFrom(savedAsset, userRepository, locationRepository,
                 modelRepository, contractRepository, invoiceRepository);
 
-        String updateNote = createUpdateNote(savedAssetString, updatedAsset.toString());
-        Note note = new Note(updatedAsset, updateNote, findAuthorOrNull(auth));
-        noteRepository.save(note);
+        noteRepository.save(new Note(updatedAsset, "Ativo atualizado de " + savedAssetString, findAuthorOrNull(auth)));
+        noteRepository.save(new Note(updatedAsset, "Ativo atualizado para " + updatedAsset.toString(), findAuthorOrNull(auth)));
+
 
         Asset asset = assetRepository.save(updatedAsset);
         return ResponseEntity.ok(asset);

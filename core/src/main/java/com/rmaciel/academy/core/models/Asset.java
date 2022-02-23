@@ -73,13 +73,16 @@ public class Asset {
 
     @Override
     public String toString() {
+        String contractNumber = contract != null ? contract.getNumber().toString() : null;
+        String invoiceNumber = invoice != null ? invoice.getNumber().toString() : null;
+
         return "Asset{" +
                 "id=" + id +
                 ", owner=" + owner.getName() +
                 ", location=" + location.getTitle() +
                 ", model=" + model.getTitle() +
-                ", contract=" + contract.getNumber() +
-                ", invoice=" + invoice.getNumber() +
+                ", contract=" + contractNumber +
+                ", invoice=" + invoiceNumber +
                 ", companyIdentification='" + companyIdentification + '\'' +
                 ", status=" + status +
                 ", chipIdentification='" + chipIdentification + '\'' +
