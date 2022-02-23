@@ -66,6 +66,14 @@ public abstract class AssetSpecifications {
         };
     }
 
+    public static Specification<Asset> likeModelType(String modelType) {
+        return (Root<Asset> root, CriteriaQuery<?> criteriaQuery, CriteriaBuilder criteriaBuilder) -> {
+            if (modelType == null || modelType.isEmpty()) return null;
+
+            return criteriaBuilder.like(root.get("model").get("type"), "%" + modelType + "%");
+        };
+    }
+
     public static Specification<Asset> equalContractNumber(Long contractNumber) {
         return (Root<Asset> root, CriteriaQuery<?> criteriaQuery, CriteriaBuilder criteriaBuilder) -> {
             if (contractNumber == null || contractNumber < 1) return null;

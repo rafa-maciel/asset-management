@@ -76,8 +76,8 @@ public class AssetForm {
         User owner = userRepository.findById(ownerId).get();
         Location location = locationRepository.findById(locationId).get();
         Model model = modelRepository.findById(modelId).get();
-        Contract contract = contractRepository.findById(contractId).get();
-        Invoice invoice = invoiceRepository.findById(invoiceId).get();
+        Contract contract = contractId != null ? contractRepository.findById(contractId).get() : null;
+        Invoice invoice = invoiceId != null ? invoiceRepository.findById(invoiceId).get() : null;
 
         asset.setOwner(owner);
         asset.setLocation(location);

@@ -19,6 +19,7 @@ public class AssetSearchForm {
     private String locationTitle;
     private Long modelId;
     private String modelTitle;
+    private String modelType;
     private Long contractNumber;
     private String contractVendor;
     private String contractVendorCNPJ;
@@ -35,6 +36,7 @@ public class AssetSearchForm {
                 .and(likeLocationTitle(locationTitle))
                 .and(equalModel(modelId))
                 .and(likeModelTitle(modelTitle))
+                .and(likeModelType(modelType))
                 .and(equalContractNumber(contractNumber))
                 .and(likeContractVendor(contractVendor))
                 .and(equalContractVendorCNPJ(contractVendorCNPJ))
