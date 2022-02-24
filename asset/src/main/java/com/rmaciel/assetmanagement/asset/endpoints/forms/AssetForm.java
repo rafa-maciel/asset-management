@@ -7,6 +7,7 @@ import lombok.Getter;
 import org.hibernate.validator.constraints.Length;
 
 import javax.validation.constraints.NotNull;
+import java.time.LocalDate;
 
 @AllArgsConstructor
 @Getter
@@ -38,6 +39,8 @@ public class AssetForm {
     @Length(max = 60)
     private String lineIdentification;
 
+    private LocalDate endOfWarranty;
+
     public Asset build(UserRepository userRepository,
                        LocationRepository locationRepository,
                        ModelRepository modelRepository,
@@ -62,6 +65,7 @@ public class AssetForm {
         asset.setSerialNumber(serialNumber);
         asset.setTag(tag);
         asset.setImei(imei);
+        asset.setEndOfWarranty(endOfWarranty);
 
         return asset;
     }
@@ -92,6 +96,7 @@ public class AssetForm {
         asset.setSerialNumber(this.serialNumber);
         asset.setTag(this.tag);
         asset.setImei(this.imei);
+        asset.setEndOfWarranty(endOfWarranty);
 
         return asset;
     }

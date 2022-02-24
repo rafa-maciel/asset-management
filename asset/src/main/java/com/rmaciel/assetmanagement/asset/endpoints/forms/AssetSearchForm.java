@@ -3,9 +3,12 @@ package com.rmaciel.assetmanagement.asset.endpoints.forms;
 import com.rmaciel.academy.core.models.Asset;
 import com.rmaciel.academy.core.models.AssetStatus;
 import com.rmaciel.academy.core.specifications.AssetSpecifications;
+import com.rmaciel.academy.core.specifications.utils.DateSearchType;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import org.springframework.data.jpa.domain.Specification;
+
+import java.time.LocalDate;
 
 import static com.rmaciel.academy.core.specifications.AssetSpecifications.*;
 
@@ -27,6 +30,9 @@ public class AssetSearchForm {
     private AssetStatus status;
     private String chipIdentification;
     private String lineIdentification;
+    private LocalDate endOfWarranty;
+    private LocalDate endOfWarrantyMax;
+    private DateSearchType modeSearchEndOfWarranty = DateSearchType.EQUAL;
 
     public Specification<Asset> buildSpecs() {
         Specification<Asset> specs = equalOwner(ownerId)
@@ -43,7 +49,8 @@ public class AssetSearchForm {
                 .and(likeCompanyIdentification(companyIdentification))
                 .and(equalStatus(status))
                 .and(equalChipIdentification(chipIdentification))
-                .and(equalLineIdentification(lineIdentification));
+                .and(equalLineIdentification(lineIdentification))
+                .and(searchDateEndOfWarranty(endOfWarranty, endOfWarrantyMax, modeSearchEndOfWarranty));
 
         return specs;
     }

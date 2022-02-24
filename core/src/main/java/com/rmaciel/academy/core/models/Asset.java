@@ -1,10 +1,12 @@
 package com.rmaciel.academy.core.models;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.util.List;
 
 @Entity
@@ -71,26 +73,32 @@ public class Asset {
     @Length(max = 30)
     private String imei;
 
+    @Column( columnDefinition = "DATE")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy")
+    private LocalDate endOfWarranty;
+
     @Override
     public String toString() {
         String contractNumber = contract != null ? contract.getNumber().toString() : null;
         String invoiceNumber = invoice != null ? invoice.getNumber().toString() : null;
 
-        return "Asset{" +
+        return "Ativo {" +
                 "id=" + id +
-                ", owner=" + owner.getName() +
-                ", location=" + location.getTitle() +
-                ", model=" + model.getTitle() +
-                ", contract=" + contractNumber +
-                ", invoice=" + invoiceNumber +
-                ", companyIdentification='" + companyIdentification + '\'' +
-                ", status=" + status +
-                ", chipIdentification='" + chipIdentification + '\'' +
-                ", lineIdentification='" + lineIdentification + '\'' +
-                ", hostname='" + hostname + '\'' +
-                ", serialNumber='" + serialNumber + '\'' +
-                ", tag='" + tag + '\'' +
-                ", imei='" + imei + '\'' +
+                ", Responsavel=" + owner.getName() +
+                ", Localicação=" + location.getTitle() +
+                ", Modelo=" + model.getTitle() +
+                ", Tipo=" + model.getType() +
+                ", Contrato Nº=" + contractNumber +
+                ", NF Nº=" + invoiceNumber +
+                ", Numero de Ativo='" + companyIdentification + '\'' +
+                ", Status=" + status +
+                ", Chip='" + chipIdentification + '\'' +
+                ", Linha='" + lineIdentification + '\'' +
+                ", Hostname='" + hostname + '\'' +
+                ", Numero de Série='" + serialNumber + '\'' +
+                ", TAG='" + tag + '\'' +
+                ", IMEI='" + imei + '\'' +
+                ", Final da Garantia='" + endOfWarranty.toString() + '\'' +
                 '}';
     }
 }

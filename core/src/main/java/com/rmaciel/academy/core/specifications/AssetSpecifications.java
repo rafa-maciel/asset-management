@@ -2,11 +2,14 @@ package com.rmaciel.academy.core.specifications;
 
 import com.rmaciel.academy.core.models.Asset;
 import com.rmaciel.academy.core.models.AssetStatus;
+import com.rmaciel.academy.core.models.Contract;
+import com.rmaciel.academy.core.specifications.utils.DateSearchType;
 import org.springframework.data.jpa.domain.Specification;
 
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
+import java.time.LocalDate;
 
 public abstract class AssetSpecifications {
 
@@ -127,6 +130,30 @@ public abstract class AssetSpecifications {
             if (lineIdentification == null || lineIdentification.isEmpty()) return null;
 
             return criteriaBuilder.equal(root.get("lineIdentification"), lineIdentification);
+        };
+    }
+
+    public static Specification<Asset> searchDateEndOfWarranty(LocalDate endOfWarranty, LocalDate endOfWarrantyMax, DateSearchType type) {
+        return (Root<Asset> root, CriteriaQuery<?> criteriaQuery, CriteriaBuilder criteriaBuilder) -> {
+            if (endOfWarranty == null) return null;
+            if (type == DateSearchType.BETWEEN && endOfWarrantyMax == null) return null;
+
+            switch (type) {
+                case EQUAL:
+                    return criteriaBuilder.equal(root.get("endOfWarranty"), endOfWarranty);
+
+                case LESS_THAN:
+                    return criteriaBuilder.lessThanOrEqualTo(root.get("endOfWarranty"), endOfWarranty);
+
+                case GREATER_THAN:
+                    return criteriaBuilder.greaterThanOrEqualTo(root.get("endOfWarranty"), endOfWarranty);
+
+                case BETWEEN:
+                    return criteriaBuilder.between(root.get("endOfWarranty"), endOfWarranty, endOfWarrantyMax);
+
+                default:
+                    return null;
+            }
         };
     }
 }
