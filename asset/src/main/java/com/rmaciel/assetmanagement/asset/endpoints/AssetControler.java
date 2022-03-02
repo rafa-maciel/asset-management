@@ -122,11 +122,11 @@ public class AssetControler {
     }
 
     @PostMapping("/import")
-    public ResponseEntity<?> importAssets(@RequestBody @Valid List<AssetImportForm> forms) {
+    public ResponseEntity<?> importAssets(@RequestBody @Valid List<AssetForm> forms) {
         if (forms != null) {
             forms.forEach(form -> {
                 if (form != null) {
-                    assetRepository.save(form.build());
+                    assetRepository.save(form.build(userRepository, locationRepository, modelRepository, contractRepository, invoiceRepository));
                 }
             });
         }
