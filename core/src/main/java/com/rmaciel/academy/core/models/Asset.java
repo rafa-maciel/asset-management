@@ -7,6 +7,7 @@ import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @Entity
@@ -81,6 +82,9 @@ public class Asset {
     public String toString() {
         String contractNumber = contract != null ? contract.getNumber().toString() : null;
         String invoiceNumber = invoice != null ? invoice.getNumber().toString() : null;
+        String endOfWarrantyStr = this.endOfWarranty != null ?
+                this.endOfWarranty.format(DateTimeFormatter.ofPattern("dd/MM/yyyy")) :
+                "Sem data";
 
         return "Ativo {" +
                 "id=" + id +
@@ -98,7 +102,7 @@ public class Asset {
                 ", Numero de Série='" + serialNumber + '\'' +
                 ", TAG='" + tag + '\'' +
                 ", IMEI='" + imei + '\'' +
-                ", Final da Garantia='" + endOfWarranty.toString() + '\'' +
+                ", Final da Garantia='" + endOfWarrantyStr + '\'' +
                 '}';
     }
 }
