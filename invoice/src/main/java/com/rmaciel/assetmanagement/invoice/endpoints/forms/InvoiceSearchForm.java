@@ -21,30 +21,19 @@ public class InvoiceSearchForm {
 
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
-    private LocalDate startsAt;
+    private LocalDate date;
 
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
-    private LocalDate startAtMax;
+    private LocalDate dateMax;
 
-    private DateSearchType startsAtSearchType = DateSearchType.EQUAL;
-
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
-    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
-    private LocalDate endsAt;
-
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
-    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
-    private LocalDate endsAtMax;
-
-    private DateSearchType endsAtSearchType = DateSearchType.EQUAL;
+    private DateSearchType dateSearchType = DateSearchType.EQUAL;
 
     public Specification<Invoice> buildSpecs() {
         Specification<Invoice> specs = equalNumber(number)
                 .and(likeVendor(vendor))
                 .and(likeVendorCNPJ(vendorCNPJ))
-                .and(searchStartsAtDate(startsAt, startAtMax, startsAtSearchType))
-                .and(searchEndsAtDate(endsAt, endsAtMax, endsAtSearchType));
+                .and(searchDate(date, dateMax, dateSearchType));
 
         return specs;
     }

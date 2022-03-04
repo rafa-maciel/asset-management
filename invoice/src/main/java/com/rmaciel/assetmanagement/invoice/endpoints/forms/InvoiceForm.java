@@ -12,19 +12,17 @@ public class InvoiceForm {
     private Long number;
     private String vendor;
     private String vendorCNPJ;
-    private LocalDate startsAt;
-    private LocalDate endsAt;
+    private LocalDate date;
 
     public Invoice build() {
-        return new Invoice(number, vendor, vendorCNPJ, startsAt, endsAt);
+        return new Invoice(number, vendor, vendorCNPJ, date);
     }
 
     public Invoice updateFrom(Invoice invoice) {
         invoice.setNumber(number);
         invoice.setVendor(vendor);
         invoice.setVendorCNPJ(vendorCNPJ);
-        invoice.setStartsAt(startsAt);
-        invoice.setEndsAt(endsAt);
+        invoice.setDate(date);
 
         return invoice;
     }

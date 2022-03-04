@@ -34,12 +34,7 @@ public class Invoice {
     @NonNull
     @Column( columnDefinition = "DATE")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy")
-    private LocalDate startsAt;
-
-    @NonNull
-    @Column( columnDefinition = "DATE")
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy")
-    private LocalDate endsAt;
+    private LocalDate date;
 
     @OneToMany(mappedBy = "invoice", orphanRemoval = true, fetch = FetchType.LAZY)
     @JsonIgnore
