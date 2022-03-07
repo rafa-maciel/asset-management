@@ -10,7 +10,7 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @Getter
 public class ContractForm {
-    private Long number;
+    private String number;
     private String vendor;
     private String vendorCNPJ;
     private LocalDate startsAt;

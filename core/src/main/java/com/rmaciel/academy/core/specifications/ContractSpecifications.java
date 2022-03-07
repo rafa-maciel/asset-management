@@ -10,9 +10,9 @@ import javax.persistence.criteria.Root;
 import java.time.LocalDate;
 
 public abstract class ContractSpecifications {
-    public static Specification<Contract> equalNumber(Long number) {
+    public static Specification<Contract> equalNumber(String number) {
         return (Root<Contract> root, CriteriaQuery<?> criteriaQuery, CriteriaBuilder criteriaBuilder) -> {
-            if (number == null || number < 1) return null;
+            if (number == null || number.isEmpty()) return null;
 
             return criteriaBuilder.equal(root.get("number"), number);
         };

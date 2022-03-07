@@ -24,7 +24,7 @@ public class Contract {
     private List<Asset> asset;
 
     @NonNull
-    private Long number;
+    private String number;
 
     @NonNull
     private String vendor;

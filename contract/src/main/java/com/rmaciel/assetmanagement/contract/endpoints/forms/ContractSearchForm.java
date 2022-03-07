@@ -15,7 +15,7 @@ import static com.rmaciel.academy.core.specifications.ContractSpecifications.*;
 @Data
 @AllArgsConstructor
 public class ContractSearchForm {
-    private Long number;
+    private String number;
     private String vendor;
     private String vendorCNPJ;
 
