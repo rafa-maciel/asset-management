@@ -24,10 +24,8 @@ public class UserForm {
     @NotNull
     private UserStatus status;
 
-    private String notes;
-
     public User build() {
-        return new User(name, re, department, status, notes);
+        return new User(name, re, department, status);
     }
 
     public User updateFrom(User user) {
@@ -35,7 +33,6 @@ public class UserForm {
         user.setRe(re);
         user.setDepartment(department);
         user.setStatus(status);
-        user.setNotes(notes);
 
         return user;
     }
