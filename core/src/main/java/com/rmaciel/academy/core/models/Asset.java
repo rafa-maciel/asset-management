@@ -6,6 +6,7 @@ import lombok.*;
 import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
@@ -51,27 +52,37 @@ public class Asset {
     @JoinColumn(name = "invoice_id")
     private Invoice invoice;
 
-    @Length(max = 60)
     @NonNull
+    @Length(max = 6)
+    @Column(length = 6, unique = true)
     private String companyIdentification;
 
     @Enumerated(EnumType.STRING)
     @NonNull
+    @NotNull
     private AssetStatus status;
 
     @Length(max = 60)
     private String chipIdentification;
 
-    @Length(max = 60)
+    @Length(max = 18)
+    @Column(length = 18, unique = true)
     private String lineIdentification;
 
     @Length(max = 30)
+    @Column(length = 30, unique = true)
     private String hostname;
-    @Length(max = 30)
+
+    @Length(max = 50)
+    @Column(length = 50, unique = true)
     private String serialNumber;
-    @Length(max = 30)
+
+    @Length(max = 10)
+    @Column(length = 10, unique = true)
     private String tag;
-    @Length(max = 30)
+
+    @Length(max = 15)
+    @Column(length = 15, unique = true)
     private String imei;
 
     @Column( columnDefinition = "DATE")
