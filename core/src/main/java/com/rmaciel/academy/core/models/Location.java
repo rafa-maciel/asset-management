@@ -3,10 +3,7 @@ package com.rmaciel.academy.core.models;
 import lombok.*;
 import org.hibernate.validator.constraints.Length;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
@@ -25,8 +22,10 @@ public class Location {
     @NotNull
     @Length(min = 2, max = 60)
     @NonNull
+    @Column( unique = true )
     private String title;
 
-    @Length(min = 0, max = 60) @NonNull
+    @Length(min = 0, max = 60)
+    @NonNull
     private String address;
 }
