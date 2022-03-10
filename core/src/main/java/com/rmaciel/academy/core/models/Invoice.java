@@ -27,8 +27,8 @@ public class Invoice {
     private List<Asset> asset;
 
     @NonNull
-    @Column(length = 10, unique = true)
-    @Length(min = 1, max = 10)
+    @Column(length = 15, unique = true)
+    @Length(min = 1, max = 15)
     private Integer number;
 
     @NonNull
