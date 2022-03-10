@@ -11,19 +11,19 @@ import javax.validation.constraints.NotNull;
 @AllArgsConstructor
 @Getter
 public class LocationForm {
-    @NotEmpty @NotNull @Length(min = 2, max = 30)
+    @NotEmpty @NotNull @Length(min = 2, max = 60)
     private String title;
 
-    @Length(max = 120)
-    private String notes;
+    @Length(max = 60)
+    private String address;
 
     public Location build() {
-        return new Location(title, notes);
+        return new Location(title, address);
     }
 
     public Location updateFrom(Location location) {
         location.setTitle(title);
-        location.setNotes(notes);
+        location.setAddress(address);
 
         return location;
     }

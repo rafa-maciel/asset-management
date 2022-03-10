@@ -23,10 +23,10 @@ public class Location {
 
     @NotEmpty
     @NotNull
-    @Length(min = 2, max = 30)
+    @Length(min = 2, max = 60)
     @NonNull
     private String title;
 
-    @Length(min = 0, max = 120) @NonNull
-    private String notes;
+    @Length(min = 0, max = 60) @NonNull
+    private String address;
 }
