@@ -3,8 +3,11 @@ package com.rmaciel.academy.core.models;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
+import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -24,15 +27,25 @@ public class Invoice {
     private List<Asset> asset;
 
     @NonNull
-    private Long number;
+    @Column(length = 10, unique = true)
+    @Length(min = 1, max = 10)
+    private Integer number;
 
     @NonNull
+    @NotEmpty
+    @Length(max = 50)
+    @Column( length = 50 )
     private String vendor;
+
     @NonNull
+    @NotEmpty
+    @Length(max = 20)
+    @Column(length = 20)
     private String vendorCNPJ;
 
     @NonNull
-    @Column( columnDefinition = "DATE")
+    @NotNull
+    @Column( columnDefinition = "DATE", nullable = false)
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy")
     private LocalDate date;
 
