@@ -9,7 +9,7 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @Getter
 public class InvoiceForm {
-    private Long number;
+    private Integer number;
     private String vendor;
     private String vendorCNPJ;
     private LocalDate date;
