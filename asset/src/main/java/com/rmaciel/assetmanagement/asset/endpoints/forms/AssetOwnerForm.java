@@ -11,11 +11,10 @@ public class AssetOwnerForm {
     private String department;
     private Long id;
     private String name;
-    private String notes;
     private Integer re;
     private UserStatus status;
 
     public User build() {
-        return new User(id, name, re, department, status, notes);
+        return new User(id, name, re, department, status);
     }
 }
