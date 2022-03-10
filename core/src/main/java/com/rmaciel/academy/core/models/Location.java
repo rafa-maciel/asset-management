@@ -22,10 +22,11 @@ public class Location {
     @NotNull
     @Length(min = 2, max = 60)
     @NonNull
-    @Column( unique = true )
+    @Column( unique = true, length = 60)
     private String title;
 
     @Length(min = 0, max = 60)
     @NonNull
+    @Column(length = 60)
     private String address;
 }
