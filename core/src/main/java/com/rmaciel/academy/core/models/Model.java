@@ -22,18 +22,20 @@ public class Model {
     @NonNull
     @NotNull
     @Length(min = 2, max = 30)
-    @Column(unique = true)
+    @Column(unique = true, length = 30)
     private String title;
 
     @NotEmpty
     @NotNull
     @Length(min = 2, max = 30)
     @NonNull
+    @Column(length = 30)
     private String brand;
 
     @NotEmpty
     @NotNull
     @Length(min = 2, max = 50)
     @NonNull
+    @Column(length = 50)
     private String type;
 }
