@@ -12,7 +12,7 @@ import javax.validation.constraints.NotNull;
 
 @AllArgsConstructor
 @Getter
-public class LocationForm {
+public class LocationCreateForm {
     @NotEmpty @NotNull @Length(min = 2, max = 60)
     @Unique(message = "Já existe uma locação com o mesmo titulo",
             fieldName = "title",
@@ -24,12 +24,5 @@ public class LocationForm {
 
     public Location build() {
         return new Location(title, address);
-    }
-
-    public Location updateFrom(Location location) {
-        location.setTitle(title);
-        location.setAddress(address);
-
-        return location;
     }
 }
