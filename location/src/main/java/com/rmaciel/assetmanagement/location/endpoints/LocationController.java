@@ -3,7 +3,8 @@ package com.rmaciel.assetmanagement.location.endpoints;
 import com.rmaciel.academy.core.models.Location;
 import com.rmaciel.academy.core.repositories.LocationRepository;
 import com.rmaciel.academy.core.specifications.LocationSpecifications;
-import com.rmaciel.assetmanagement.location.endpoints.forms.LocationForm;
+import com.rmaciel.assetmanagement.location.endpoints.forms.LocationCreateForm;
+import com.rmaciel.assetmanagement.location.endpoints.forms.LocationUpdateForm;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
@@ -33,13 +34,13 @@ public class LocationController {
     }
 
     @PostMapping
-    public ResponseEntity<Location> create(@RequestBody @Valid LocationForm form) {
+    public ResponseEntity<Location> create(@RequestBody @Valid LocationCreateForm form) {
         Location location = locationRepository.save(form.build());
         return ResponseEntity.status(HttpStatus.CREATED).body(location);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Location> update(@PathVariable Long id, @RequestBody @Valid LocationForm form) {
+    public ResponseEntity<Location> update(@PathVariable Long id, @RequestBody @Valid LocationUpdateForm form) {
         Location savedLocation = findLocationOrNull(id);
         if (savedLocation == null) return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
 
