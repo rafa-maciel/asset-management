@@ -2,8 +2,9 @@ package com.rmaciel.assetmanagement.model.endpoints;
 
 import com.rmaciel.academy.core.models.Model;
 import com.rmaciel.academy.core.repositories.ModelRepository;
-import com.rmaciel.assetmanagement.model.endpoints.forms.ModelForm;
+import com.rmaciel.assetmanagement.model.endpoints.forms.ModelCreateForm;
 import com.rmaciel.assetmanagement.model.endpoints.forms.ModelSearchForm;
+import com.rmaciel.assetmanagement.model.endpoints.forms.ModelUpdateForm;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
@@ -33,13 +34,13 @@ public class ModelController {
     }
 
     @PostMapping
-    public ResponseEntity<Model> create(@RequestBody @Valid ModelForm form) {
+    public ResponseEntity<Model> create(@RequestBody @Valid ModelCreateForm form) {
         Model model = modelRepository.save(form.build());
         return ResponseEntity.status(HttpStatus.CREATED).body(model);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Model> update(@PathVariable Long id, @RequestBody @Valid ModelForm form) {
+    public ResponseEntity<Model> update(@PathVariable Long id, @RequestBody @Valid ModelUpdateForm form) {
         Model savedModel = findModelOrNull(id);
         if (savedModel == null) return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
 

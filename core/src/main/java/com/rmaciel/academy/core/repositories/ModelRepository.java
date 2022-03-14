@@ -7,4 +7,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface ModelRepository extends PagingAndSortingRepository<Model, Long>, JpaSpecificationExecutor<Model> {
+
+    boolean existsByTitle(String title);
 }
