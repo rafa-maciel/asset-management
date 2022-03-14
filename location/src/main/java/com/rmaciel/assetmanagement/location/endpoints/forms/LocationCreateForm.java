@@ -7,13 +7,13 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import org.hibernate.validator.constraints.Length;
 
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
+import javax.validation.constraints.NotBlank;
 
 @AllArgsConstructor
 @Getter
 public class LocationCreateForm {
-    @NotEmpty @NotNull @Length(min = 2, max = 60)
+    @NotBlank
+    @Length(min = 2, max = 60)
     @Unique(message = "Já existe uma locação com o mesmo titulo",
             fieldName = "title",
             service = LocationUniqueService.class)
