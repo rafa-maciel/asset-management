@@ -1,11 +1,7 @@
 package com.rmaciel.academy.core.models;
 
 import lombok.*;
-import org.hibernate.validator.constraints.Length;
-
 import javax.persistence.*;
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
 
 @Entity
 @Data
@@ -19,23 +15,17 @@ public class User {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @NotNull
-    @NotEmpty
-    @Length(max = 60)
-    @Column( unique = true, length = 60)
+    @Column( unique = true, length = 60, nullable = false)
     private String name;
 
-    @NotNull
-    @Length(min = 5, max = 5)
-    @Column(length = 5, unique = true)
+    @Column(length = 5, unique = true, nullable = false)
     private Integer re;
 
-    @NotNull
-    @Length(max = 60)
-    @Column(length = 60)
+    @Column(length = 60, nullable = false)
     private String department;
 
     @Enumerated(EnumType.STRING)
+    @Column(nullable = false, length = 50)
     private UserStatus status = UserStatus.ACTIVE;
 
     public User(String name, Integer re, String department, UserStatus status) {

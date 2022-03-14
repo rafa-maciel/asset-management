@@ -6,19 +6,23 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import org.hibernate.validator.constraints.Length;
 
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
 @AllArgsConstructor
 @Getter
 public class UserForm {
-    @NotEmpty @NotNull @Length(min = 3, max = 50)
+    @NotBlank
+    @Length(max = 60)
     private String name;
 
     @NotNull
+    @Length(min = 1, max = 99999)
     private Integer re;
 
-    @NotNull @NotEmpty @Length(min = 1, max = 50)
+    @NotBlank
+    @Length(max = 60)
     private String department;
 
     @NotNull
