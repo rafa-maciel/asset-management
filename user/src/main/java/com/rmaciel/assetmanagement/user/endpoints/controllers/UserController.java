@@ -2,9 +2,9 @@ package com.rmaciel.assetmanagement.user.endpoints.controllers;
 
 import com.rmaciel.academy.core.models.User;
 import com.rmaciel.academy.core.repositories.UserRepository;
-import com.rmaciel.assetmanagement.user.endpoints.controllers.forms.UserForm;
+import com.rmaciel.assetmanagement.user.endpoints.controllers.forms.UserCreateForm;
 import com.rmaciel.assetmanagement.user.endpoints.controllers.forms.UserSearchForm;
-import javassist.NotFoundException;
+import com.rmaciel.assetmanagement.user.endpoints.controllers.forms.UserUpdateForm;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
@@ -35,13 +35,13 @@ public class UserController {
     }
 
     @PostMapping
-    public ResponseEntity<User> create(@RequestBody @Valid UserForm form) {
+    public ResponseEntity<User> create(@RequestBody @Valid UserCreateForm form) {
         User user = userRepository.save(form.build());
         return ResponseEntity.status(HttpStatus.CREATED).body(user);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<User> update(@PathVariable Long id, @RequestBody @Valid UserForm form) {
+    public ResponseEntity<User> update(@PathVariable Long id, @RequestBody @Valid UserUpdateForm form) {
         User savedUser = findUserOrNull(id);
         if (savedUser == null) return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
 
@@ -67,7 +67,7 @@ public class UserController {
     }
 
     @PostMapping("/import")
-    public ResponseEntity<?> importUsers(@RequestBody @Valid List<UserForm> listForm) {
+    public ResponseEntity<?> importUsers(@RequestBody @Valid List<UserCreateForm> listForm) {
         System.out.println(listForm);
         if(listForm != null)
             listForm.forEach(form -> {
