@@ -12,7 +12,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -53,7 +52,6 @@ public class UserController {
     public ResponseEntity<User> update(@PathVariable Long id, @RequestBody @Valid UserUpdateForm form) {
         User savedUser = findUserOrNull(id);
         if (savedUser == null) return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
-        if ( isInvalidStatusChange(savedUser, form.getStatus()) ) throw new MethodArgumentNotValidException()
 
         User user = userRepository.save(form.updateFrom(savedUser));
         return ResponseEntity.ok(user);
