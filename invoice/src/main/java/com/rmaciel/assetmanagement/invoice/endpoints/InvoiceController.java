@@ -2,8 +2,9 @@ package com.rmaciel.assetmanagement.invoice.endpoints;
 
 import com.rmaciel.academy.core.models.Invoice;
 import com.rmaciel.academy.core.repositories.InvoiceRepository;
-import com.rmaciel.assetmanagement.invoice.endpoints.forms.InvoiceForm;
+import com.rmaciel.assetmanagement.invoice.endpoints.forms.InvoiceCreateForm;
 import com.rmaciel.assetmanagement.invoice.endpoints.forms.InvoiceSearchForm;
+import com.rmaciel.assetmanagement.invoice.endpoints.forms.InvoiceUpdateForm;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -34,13 +35,13 @@ public class InvoiceController {
     }
 
     @PostMapping
-    public ResponseEntity<Invoice> create(@RequestBody @Valid InvoiceForm form) {
+    public ResponseEntity<Invoice> create(@RequestBody @Valid InvoiceCreateForm form) {
         Invoice invoice = invoiceRepository.save(form.build());
         return ResponseEntity.status(HttpStatus.CREATED).body(invoice);
     }
 
     @PutMapping("/{invoiceId}")
-    public ResponseEntity<Invoice> update(@PathVariable("invoiceId") Long id, @RequestBody @Valid InvoiceForm form) {
+    public ResponseEntity<Invoice> update(@PathVariable("invoiceId") Long id, @RequestBody @Valid InvoiceUpdateForm form) {
         Invoice invoice = findOrNull(id);
         if (invoice == null) return ResponseEntity.badRequest().build();
 
