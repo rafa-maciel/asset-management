@@ -10,4 +10,5 @@ public interface UserRepository extends PagingAndSortingRepository<User, Long>, 
 
     boolean existsByName(String name);
     boolean existsByRe(Integer re);
+
 }

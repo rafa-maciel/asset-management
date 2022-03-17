@@ -1,6 +1,8 @@
 package com.rmaciel.assetmanagement.user.endpoints.controllers;
 
 import com.rmaciel.academy.core.models.User;
+import com.rmaciel.academy.core.models.UserStatus;
+import com.rmaciel.academy.core.repositories.AssetRepository;
 import com.rmaciel.academy.core.repositories.UserRepository;
 import com.rmaciel.assetmanagement.user.endpoints.controllers.forms.UserCreateForm;
 import com.rmaciel.assetmanagement.user.endpoints.controllers.forms.UserSearchForm;
@@ -10,6 +12,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -21,9 +24,11 @@ import java.util.Optional;
 public class UserController {
 
     private final UserRepository userRepository;
+    private final AssetRepository assetRepository;
 
-    public UserController(UserRepository userRepository) {
+    public UserController(UserRepository userRepository, AssetRepository assetRepository) {
         this.userRepository = userRepository;
+        this.assetRepository = assetRepository;
     }
 
     private User findUserOrNull(Long id) {
@@ -32,6 +37,10 @@ public class UserController {
             return null;
 
         return optionalUser.get();
+    }
+
+    private boolean isInvalidStatusChange(User user, UserStatus status) {
+        return status.equals(UserStatus.INACTIVE) && assetRepository.existsByOwner(user);
     }
 
     @PostMapping
@@ -44,6 +53,7 @@ public class UserController {
     public ResponseEntity<User> update(@PathVariable Long id, @RequestBody @Valid UserUpdateForm form) {
         User savedUser = findUserOrNull(id);
         if (savedUser == null) return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        if ( isInvalidStatusChange(savedUser, form.getStatus()) ) throw new MethodArgumentNotValidException()
 
         User user = userRepository.save(form.updateFrom(savedUser));
         return ResponseEntity.ok(user);
