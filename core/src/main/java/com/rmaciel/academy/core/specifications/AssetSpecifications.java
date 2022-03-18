@@ -132,6 +132,21 @@ public abstract class AssetSpecifications {
         };
     }
 
+    public static Specification<Asset> equalImei(Long imei) {
+        return (Root<Asset> root, CriteriaQuery<?> criteriaQuery, CriteriaBuilder criteriaBuilder) -> {
+            if (imei == null || imei < 1) return null;
+
+            return criteriaBuilder.equal(root.get("imei"), imei);
+        };
+    }
+
+    public static Specification<Asset> equalTag(String tag) {
+        return (Root<Asset> root, CriteriaQuery<?> criteriaQuery, CriteriaBuilder criteriaBuilder) -> {
+            if (tag == null || tag.isEmpty()) return null;
+
+            return criteriaBuilder.equal(root.get("tag"), tag);
+        };
+    }
 
     public static Specification<Asset> searchDateEndOfWarranty(LocalDate endOfWarranty, LocalDate endOfWarrantyMax, DateSearchType type) {
         return (Root<Asset> root, CriteriaQuery<?> criteriaQuery, CriteriaBuilder criteriaBuilder) -> {

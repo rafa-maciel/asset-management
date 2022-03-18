@@ -32,6 +32,8 @@ public class AssetSearchForm {
     private LocalDate endOfWarranty;
     private LocalDate endOfWarrantyMax;
     private DateSearchType modeSearchEndOfWarranty;
+    private Long imei;
+    private String tag;
 
     public Specification<Asset> buildSpecs() {
         return equalOwner(ownerId)
@@ -49,6 +51,8 @@ public class AssetSearchForm {
                 .and(equalStatus(status))
                 .and(equalChipIdentification(chipIdentification))
                 .and(equalLineIdentification(lineIdentification))
+                .and(equalImei(imei))
+                .and(equalTag(tag))
                 .and(searchDateEndOfWarranty(endOfWarranty, endOfWarrantyMax, modeSearchEndOfWarranty));
     }
 }
