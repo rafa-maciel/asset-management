@@ -4,8 +4,9 @@ import com.rmaciel.academy.core.models.Asset;
 import com.rmaciel.academy.core.models.Note;
 import com.rmaciel.academy.core.models.UserAccount;
 import com.rmaciel.academy.core.repositories.*;
-import com.rmaciel.assetmanagement.asset.endpoints.forms.AssetForm;
+import com.rmaciel.assetmanagement.asset.endpoints.forms.AssetCreateForm;
 import com.rmaciel.assetmanagement.asset.endpoints.forms.AssetSearchForm;
+import com.rmaciel.assetmanagement.asset.endpoints.forms.AssetUpdateForm;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -23,7 +24,7 @@ import java.util.Optional;
 @RestController
 @RequestMapping("/assets")
 @Slf4j
-public class AssetControler {
+public class AssetController {
 
     private final AssetRepository assetRepository;
     private final UserRepository userRepository;
@@ -34,14 +35,14 @@ public class AssetControler {
     private final UserAccountRepository userAccountRepository;
     private final NoteRepository noteRepository;
 
-    protected AssetControler(AssetRepository assetRepository,
-                             UserRepository userRepository,
-                             LocationRepository locationRepository,
-                             ModelRepository modelRepository,
-                             ContractRepository contractRepository,
-                             InvoiceRepository invoiceRepository,
-                             UserAccountRepository userAccountRepository,
-                             NoteRepository noteRepository) {
+    protected AssetController(AssetRepository assetRepository,
+                              UserRepository userRepository,
+                              LocationRepository locationRepository,
+                              ModelRepository modelRepository,
+                              ContractRepository contractRepository,
+                              InvoiceRepository invoiceRepository,
+                              UserAccountRepository userAccountRepository,
+                              NoteRepository noteRepository) {
         this.assetRepository = assetRepository;
         this.userRepository = userRepository;
         this.locationRepository = locationRepository;
@@ -68,7 +69,7 @@ public class AssetControler {
     }
 
     @PostMapping
-    public ResponseEntity<Asset> create(@RequestBody @Valid AssetForm form) {
+    public ResponseEntity<Asset> create(@RequestBody @Valid AssetCreateForm form) {
         Asset asset = assetRepository.save(
                 form.build(userRepository, locationRepository, modelRepository, contractRepository, invoiceRepository));
 
@@ -76,7 +77,7 @@ public class AssetControler {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Asset> update(@PathVariable Long id, @RequestBody @Valid AssetForm form, Authentication auth) {
+    public ResponseEntity<Asset> update(@PathVariable Long id, @RequestBody @Valid AssetUpdateForm form, Authentication auth) {
         Asset savedAsset = findAssetOrNull(id);
         if (savedAsset == null) return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
 
@@ -90,7 +91,7 @@ public class AssetControler {
 
         UserAccount author = findAuthorOrNull(auth);
         noteRepository.save(new Note(updatedAsset, "Atualidado de: " + savedAssetString, author));
-        noteRepository.save(new Note(updatedAsset, "Para: " + updatedAsset.toString(), author));
+        noteRepository.save(new Note(updatedAsset, "Para: " + updatedAsset, author));
 
         Asset asset = assetRepository.save(updatedAsset);
         return ResponseEntity.ok(asset);
@@ -121,7 +122,7 @@ public class AssetControler {
     }
 
     @PostMapping("/import")
-    public ResponseEntity<?> importAssets(@RequestBody @Valid List<AssetForm> forms) {
+    public ResponseEntity<?> importAssets(@RequestBody @Valid List<AssetCreateForm> forms) {
         if (forms != null) {
             forms.forEach(form -> {
                 if (form != null) {
