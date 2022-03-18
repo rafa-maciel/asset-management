@@ -17,8 +17,6 @@ public class UserUniqueServiceImpl implements UserUniqueService {
     private static final String FIELD_NAME = "name";
     private static final String FIELD_RE = "re";
 
-    static List<String> ALLOWED_FIELDS = Arrays.asList(FIELD_NAME, FIELD_RE);
-
     @Override
     public boolean fieldValueExists(Object value, String fieldName) throws UnsupportedOperationException {
         if (fieldName == null) throw new UnsupportedOperationException();
