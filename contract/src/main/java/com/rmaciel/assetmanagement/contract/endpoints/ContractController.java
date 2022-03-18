@@ -1,10 +1,10 @@
 package com.rmaciel.assetmanagement.contract.endpoints;
 
 import com.rmaciel.academy.core.models.Contract;
-import com.rmaciel.academy.core.models.Location;
 import com.rmaciel.academy.core.repositories.ContractRepository;
-import com.rmaciel.assetmanagement.contract.endpoints.forms.ContractForm;
+import com.rmaciel.assetmanagement.contract.endpoints.forms.ContractCreateForm;
 import com.rmaciel.assetmanagement.contract.endpoints.forms.ContractSearchForm;
+import com.rmaciel.assetmanagement.contract.endpoints.forms.ContractUpdateForm;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -35,13 +35,13 @@ public class ContractController {
     }
 
     @PostMapping
-    public ResponseEntity<Contract> create(@RequestBody @Valid ContractForm form) {
+    public ResponseEntity<Contract> create(@RequestBody @Valid ContractCreateForm form) {
         Contract contract = contractRepository.save(form.build());
         return ResponseEntity.status(HttpStatus.CREATED).body(contract);
     }
 
     @PutMapping("/{contractId}")
-    public ResponseEntity<Contract> update(@PathVariable("contractId") Long id, @RequestBody @Valid ContractForm form) {
+    public ResponseEntity<Contract> update(@PathVariable("contractId") Long id, @RequestBody @Valid ContractUpdateForm form) {
         Contract contract = findOrNull(id);
         if (contract == null) return ResponseEntity.badRequest().build();
 
