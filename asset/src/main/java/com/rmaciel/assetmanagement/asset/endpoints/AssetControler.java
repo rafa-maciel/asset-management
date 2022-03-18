@@ -5,7 +5,6 @@ import com.rmaciel.academy.core.models.Note;
 import com.rmaciel.academy.core.models.UserAccount;
 import com.rmaciel.academy.core.repositories.*;
 import com.rmaciel.assetmanagement.asset.endpoints.forms.AssetForm;
-import com.rmaciel.assetmanagement.asset.endpoints.forms.AssetImportForm;
 import com.rmaciel.assetmanagement.asset.endpoints.forms.AssetSearchForm;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
