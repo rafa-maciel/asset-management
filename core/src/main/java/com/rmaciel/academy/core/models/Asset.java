@@ -3,10 +3,8 @@ package com.rmaciel.academy.core.models;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
-import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
@@ -53,8 +51,8 @@ public class Asset {
     private Invoice invoice;
 
     @NonNull
-    @Column(length = 6, unique = true)
-    private String companyIdentification;
+    @Column(unique = true)
+    private Integer companyIdentification;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
@@ -62,7 +60,7 @@ public class Asset {
     private AssetStatus status;
 
     @Column(unique = true)
-    private String chipIdentification;
+    private Long chipIdentification;
 
     @Column(length = 18, unique = true)
     private String lineIdentification;
@@ -76,8 +74,8 @@ public class Asset {
     @Column(length = 10, unique = true)
     private String tag;
 
-    @Column(length = 15, unique = true)
-    private String imei;
+    @Column(unique = true)
+    private Long imei;
 
     @Column( columnDefinition = "DATE")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy")

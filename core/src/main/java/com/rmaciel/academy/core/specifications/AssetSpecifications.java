@@ -2,7 +2,6 @@ package com.rmaciel.academy.core.specifications;
 
 import com.rmaciel.academy.core.models.Asset;
 import com.rmaciel.academy.core.models.AssetStatus;
-import com.rmaciel.academy.core.models.Contract;
 import com.rmaciel.academy.core.specifications.utils.DateSearchType;
 import org.springframework.data.jpa.domain.Specification;
 
@@ -101,11 +100,11 @@ public abstract class AssetSpecifications {
         };
     }
 
-    public static Specification<Asset> likeCompanyIdentification(String companyIdentification) {
+    public static Specification<Asset> equalCompanyIdentification(Integer companyIdentification) {
         return (Root<Asset> root, CriteriaQuery<?> criteriaQuery, CriteriaBuilder criteriaBuilder) -> {
-            if (companyIdentification == null || companyIdentification.isEmpty()) return null;
+            if (companyIdentification == null || companyIdentification < 1) return null;
 
-            return criteriaBuilder.like(root.get("companyIdentification"), "%" + companyIdentification + "%");
+            return criteriaBuilder.equal(root.get("companyIdentification"), companyIdentification);
         };
     }
 
@@ -117,9 +116,9 @@ public abstract class AssetSpecifications {
         };
     }
 
-    public static Specification<Asset> equalChipIdentification(String chipIdentification) {
+    public static Specification<Asset> equalChipIdentification(Long chipIdentification) {
         return (Root<Asset> root, CriteriaQuery<?> criteriaQuery, CriteriaBuilder criteriaBuilder) -> {
-            if (chipIdentification == null || chipIdentification.isEmpty()) return null;
+            if (chipIdentification == null || chipIdentification < 1) return null;
 
             return criteriaBuilder.equal(root.get("chipIdentification"), chipIdentification);
         };
@@ -132,6 +131,7 @@ public abstract class AssetSpecifications {
             return criteriaBuilder.equal(root.get("lineIdentification"), lineIdentification);
         };
     }
+
 
     public static Specification<Asset> searchDateEndOfWarranty(LocalDate endOfWarranty, LocalDate endOfWarrantyMax, DateSearchType type) {
         return (Root<Asset> root, CriteriaQuery<?> criteriaQuery, CriteriaBuilder criteriaBuilder) -> {

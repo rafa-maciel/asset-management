@@ -2,7 +2,6 @@ package com.rmaciel.assetmanagement.asset.endpoints.forms;
 
 import com.rmaciel.academy.core.models.Asset;
 import com.rmaciel.academy.core.models.AssetStatus;
-import com.rmaciel.academy.core.specifications.AssetSpecifications;
 import com.rmaciel.academy.core.specifications.utils.DateSearchType;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -26,16 +25,16 @@ public class AssetSearchForm {
     private Long contractNumber;
     private String contractVendor;
     private String contractVendorCNPJ;
-    private String companyIdentification;
+    private Integer companyIdentification;
     private AssetStatus status;
-    private String chipIdentification;
+    private Long chipIdentification;
     private String lineIdentification;
     private LocalDate endOfWarranty;
     private LocalDate endOfWarrantyMax;
-    private DateSearchType modeSearchEndOfWarranty = DateSearchType.EQUAL;
+    private DateSearchType modeSearchEndOfWarranty;
 
     public Specification<Asset> buildSpecs() {
-        Specification<Asset> specs = equalOwner(ownerId)
+        return equalOwner(ownerId)
                 .and(likeOwnerName(ownerName))
                 .and(equalOwnerRE(ownerRe))
                 .and(equalLocation(locationId))
@@ -46,12 +45,10 @@ public class AssetSearchForm {
                 .and(equalContractNumber(contractNumber))
                 .and(likeContractVendor(contractVendor))
                 .and(equalContractVendorCNPJ(contractVendorCNPJ))
-                .and(likeCompanyIdentification(companyIdentification))
+                .and(equalCompanyIdentification(companyIdentification))
                 .and(equalStatus(status))
                 .and(equalChipIdentification(chipIdentification))
                 .and(equalLineIdentification(lineIdentification))
                 .and(searchDateEndOfWarranty(endOfWarranty, endOfWarrantyMax, modeSearchEndOfWarranty));
-
-        return specs;
     }
 }
