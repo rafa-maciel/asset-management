@@ -22,17 +22,17 @@ public class Asset {
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "owner_id")
+    @JoinColumn(name = "owner_id", nullable = false)
     @NonNull
     private User owner;
 
     @ManyToOne
-    @JoinColumn(name = "location_id")
+    @JoinColumn(name = "location_id", nullable = false)
     @NonNull
     private Location location;
 
     @ManyToOne
-    @JoinColumn(name = "model_id")
+    @JoinColumn(name = "model_id", nullable = false)
     @NonNull
     private Model model;
 
@@ -53,35 +53,29 @@ public class Asset {
     private Invoice invoice;
 
     @NonNull
-    @Length(max = 6)
     @Column(length = 6, unique = true)
     private String companyIdentification;
 
     @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
     @NonNull
-    @NotNull
     private AssetStatus status;
 
-    @Length(max = 60)
+    @Column(unique = true)
     private String chipIdentification;
 
-    @Length(max = 18)
     @Column(length = 18, unique = true)
     private String lineIdentification;
 
-    @Length(max = 30)
     @Column(length = 30, unique = true)
     private String hostname;
 
-    @Length(max = 50)
     @Column(length = 50, unique = true)
     private String serialNumber;
 
-    @Length(max = 10)
     @Column(length = 10, unique = true)
     private String tag;
 
-    @Length(max = 15)
     @Column(length = 15, unique = true)
     private String imei;
 
