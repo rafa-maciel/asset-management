@@ -10,4 +10,5 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface ContractRepository extends PagingAndSortingRepository<Contract, Long>, JpaSpecificationExecutor<Contract> {
     Contract findByAssetId(Long id);
+    boolean existsByNumber(String number);
 }
