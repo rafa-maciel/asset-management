@@ -50,14 +50,14 @@ public class AssetCreateForm {
     @Unique(message = "Já existe um dispositivo com este imei",
            service = AssetUniqueService.class,
            fieldName = "imei")
-    @Max(value = 15)
-    @Min(value = 15)
+    @Max(value = 999999999)
+    @Min(value = 999999999)
     private Long imei;
 
     @Unique(message = "Já existe um dispositivo com esta identificação",
            service = AssetUniqueService.class,
            fieldName = "companyIdentification")
-    @Max(value = 6)
+    @Max(value = 999999)
     private Integer companyIdentification;
 
     @NotNull
@@ -66,7 +66,7 @@ public class AssetCreateForm {
     @Unique(message = "Já existe um dispositivo com este número de chip",
             service = AssetUniqueService.class,
             fieldName = "chipIdentification")
-    @Max(value = 30)
+    @Max(value = 999999999)
     private Long chipIdentification;
 
     @Unique(message = "Já existe um dispositivo com esta linha",
@@ -87,7 +87,8 @@ public class AssetCreateForm {
         Location location = findLocation(locationRepository, locationId);
         Model model = findModel(modelRepository, modelId);
 
-        Asset asset = new Asset(owner, location, model, companyIdentification, status);
+        Asset asset = new Asset(owner, location, model, status);
+        asset.setCompanyIdentification(this.companyIdentification);
         asset.setChipIdentification(this.chipIdentification);
         asset.setLineIdentification(this.lineIdentification);
         asset.setHostname(hostname);

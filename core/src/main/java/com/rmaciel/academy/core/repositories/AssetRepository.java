@@ -9,11 +9,11 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface AssetRepository extends PagingAndSortingRepository<Asset, Long>, JpaSpecificationExecutor<Asset> {
     boolean existsByOwner(User user);
-    boolean existsByChipIdentification(String chipIdentification);
-    boolean existsByCompanyIdentification(String companyIdentification);
+    boolean existsByChipIdentification(Long chipIdentification);
+    boolean existsByCompanyIdentification(Integer companyIdentification);
     boolean existsByHostname(String hostname);
     boolean existsByLineIdentification(String lineIdentification);
     boolean existsBySerialNumber(String serialNumber);
     boolean existsByTag(String tag);
-    boolean existsByImei(String imei);
+    boolean existsByImei(Long imei);
 }

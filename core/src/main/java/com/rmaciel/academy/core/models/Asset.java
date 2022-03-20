@@ -50,7 +50,6 @@ public class Asset {
     @JoinColumn(name = "invoice_id")
     private Invoice invoice;
 
-    @NonNull
     @Column(unique = true)
     private Integer companyIdentification;
 

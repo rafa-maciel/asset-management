@@ -35,17 +35,17 @@ public class AssetUpdateForm {
     @Length(max = 10)
     private String tag;
 
-    @Max(value = 15)
-    @Min(value = 15)
+    @Max(value = 999999999)
+    @Min(value = 999999999)
     private Long imei;
 
-    @Max(value = 6)
+    @Max(value = 999999)
     private Integer companyIdentification;
 
     @NotNull
     private AssetStatus status;
 
-    @Max(value = 30)
+    @Max(value = 999999999)
     private Long chipIdentification;
 
     @Length(max = 18)

@@ -26,10 +26,10 @@ public class AssetUniqueServiceImpl implements AssetUniqueService {
 
         switch (fieldName.toLowerCase()) {
             case FIELD_CHIP_IDENTIFICATION:
-                return repository.existsByChipIdentification(value.toString());
+                return repository.existsByChipIdentification(Long.parseLong(value.toString()));
 
             case FIELD_COMPANY_IDENTIFICATION:
-                return repository.existsByCompanyIdentification(value.toString());
+                return repository.existsByCompanyIdentification(Integer.parseInt(value.toString()));
 
             case FIELD_HOSTNAME:
                 return repository.existsByHostname(value.toString());
@@ -44,7 +44,7 @@ public class AssetUniqueServiceImpl implements AssetUniqueService {
                 return repository.existsByTag(value.toString());
 
             case FIELD_IMEI:
-                return repository.existsByImei(value.toString());
+                return repository.existsByImei((Long.parseLong(value.toString())));
 
 
             default:
