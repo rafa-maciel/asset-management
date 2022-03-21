@@ -36,4 +36,11 @@ public abstract class UserSpecifications {
             return criteriaBuilder.equal(root.get("status"), status);
         };
     }
+
+    public static Specification<User> notEqualStatus(UserStatus status){
+        return (Root<User> root, CriteriaQuery<?> criteriaQuery, CriteriaBuilder criteriaBuilder) -> {
+            if (status == null) return null;
+            return criteriaBuilder.notEqual(root.get("status"), status);
+        };
+    }
 }

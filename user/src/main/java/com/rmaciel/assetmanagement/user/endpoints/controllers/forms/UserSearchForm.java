@@ -17,12 +17,14 @@ public class UserSearchForm {
     private Long re;
     private String department;
     private UserStatus status;
+    private UserStatus notStatus;
 
     public Specification<User> buildSpecs() {
         Specification<User> specs = likeName(name)
                 .and(equalRe(re))
                 .and(likeDepartment(department))
-                .and(equalStatus(status));
+                .and(equalStatus(status))
+                .and(notEqualStatus(notStatus));
 
         return specs;
     }
