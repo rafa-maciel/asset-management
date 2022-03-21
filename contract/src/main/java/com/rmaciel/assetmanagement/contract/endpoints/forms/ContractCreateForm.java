@@ -26,7 +26,7 @@ public class ContractCreateForm {
     @NotBlank
     private String vendor;
 
-    @CNPJ
+    @CNPJ(message = "Este CNPJ não é valido")
     @NotBlank
     private String vendorCNPJ;
 

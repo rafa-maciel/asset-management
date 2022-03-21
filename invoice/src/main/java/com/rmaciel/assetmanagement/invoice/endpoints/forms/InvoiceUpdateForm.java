@@ -25,7 +25,7 @@ public class InvoiceUpdateForm {
     private String vendor;
 
     @NotBlank
-    @CNPJ
+    @CNPJ(message = "Este CNPJ não é valido")
     private String vendorCNPJ;
 
     @NotNull
