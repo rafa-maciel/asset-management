@@ -1,8 +1,9 @@
 package com.rmaciel.academy.core.services;
 
+import com.rmaciel.academy.core.utils.DefaultFilenameUtil;
 import com.rmaciel.academy.core.utils.StorageFile;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.core.io.ByteArrayResource;
 import org.springframework.stereotype.Service;
 
 import java.io.File;
@@ -12,6 +13,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 
 @Service
+@Slf4j
 public class FileManagerService {
     @Value("${assetmanagement.files.pathname}")
     private String pathname;
@@ -25,6 +27,11 @@ public class FileManagerService {
         fos.close();
 
         return absolutPath;
+    }
+
+    public String saveDefaultName(String extension, byte[] bytes) throws IOException {
+        String defaultFilename = String.format("%s.%s", DefaultFilenameUtil.build(), extension);
+        return save(defaultFilename, bytes);
     }
 
     public void deleteFile(String absolutFilename) throws IOException {

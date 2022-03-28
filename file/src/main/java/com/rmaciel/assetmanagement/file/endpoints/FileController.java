@@ -8,13 +8,16 @@ import com.rmaciel.academy.core.repositories.InvoiceRepository;
 import com.rmaciel.academy.core.services.FileManagerService;
 import com.rmaciel.academy.core.utils.StorageFile;
 import com.rmaciel.assetmanagement.file.endpoints.forms.FileForm;
+import com.rmaciel.assetmanagement.file.utils.MediaTypeForFilename;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.io.Resource;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.ServletContext;
 import java.io.IOException;
 import java.nio.file.NoSuchFileException;
 import java.util.Optional;
@@ -28,17 +31,20 @@ public class FileController {
     private final AssetRepository assetRepository;
     private final ContractRepository contractRepository;
     private final InvoiceRepository invoiceRepository;
+    private final ServletContext servletContext;
 
     protected FileController(FileRepository fileRepository,
                              FileManagerService fileManagerService,
                              AssetRepository assetRepository,
                              ContractRepository contractRepository,
-                             InvoiceRepository invoiceRepository) {
+                             InvoiceRepository invoiceRepository,
+                             ServletContext context) {
         this.fileRepository = fileRepository;
         this.fileManagerService = fileManagerService;
         this.assetRepository = assetRepository;
         this.contractRepository = contractRepository;
         this.invoiceRepository = invoiceRepository;
+        servletContext = context;
     }
 
     private File findOrNull(Long id) {
@@ -51,7 +57,7 @@ public class FileController {
 
     @PostMapping(consumes = { "multipart/form-data" } )
     public ResponseEntity<File> create(@ModelAttribute FileForm form) throws IOException {
-        String absoluteFilename = fileManagerService.save(form.getFile().getOriginalFilename(), form.getFile().getBytes());
+        String absoluteFilename = fileManagerService.saveDefaultName(form.getFileExtension(), form.getBytes());
 
         File file = fileRepository.save(form.build(absoluteFilename, assetRepository, contractRepository, invoiceRepository));
         return ResponseEntity.status(HttpStatus.CREATED).body(file);
@@ -96,11 +102,16 @@ public class FileController {
         Optional<File> optionalFile = fileRepository.findById(fileId);
         if (optionalFile.isEmpty()) return ResponseEntity.badRequest().build();
 
-        StorageFile file = fileManagerService.storageFile(optionalFile.get().getUri());
+        File file = optionalFile.get();
+
+        StorageFile storageFile = fileManagerService.storageFile(file.getUri());
+        MediaType mediaType = MediaTypeForFilename.getType(servletContext, storageFile.getFileName());
+        HttpHeaders headers = new HttpHeaders();
+        headers.add(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=" + file.getName());
 
         return ResponseEntity.ok()
-                .contentType(MediaType.APPLICATION_OCTET_STREAM)
-                .header("Content-Type", file.getFileName())
-                .body(file.getResource());
+                .contentType(mediaType)
+                .headers(headers)
+                .body(storageFile.getResource());
     }
 }
