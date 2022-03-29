@@ -7,7 +7,6 @@ import lombok.Getter;
 import org.hibernate.validator.constraints.Length;
 
 import javax.validation.constraints.Max;
-import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 import java.util.NoSuchElementException;
@@ -35,9 +34,8 @@ public class AssetUpdateForm {
     @Length(max = 10)
     private String tag;
 
-    @Max(value = 999999999)
-    @Min(value = 999999999)
-    private Long imei;
+    @Length(max = 20)
+    private String imei;
 
     @Max(value = 999999)
     private Integer companyIdentification;
@@ -45,8 +43,8 @@ public class AssetUpdateForm {
     @NotNull
     private AssetStatus status;
 
-    @Max(value = 999999999)
-    private Long chipIdentification;
+    @Length(max = 30)
+    private String chipIdentification;
 
     @Length(max = 18)
     private String lineIdentification;

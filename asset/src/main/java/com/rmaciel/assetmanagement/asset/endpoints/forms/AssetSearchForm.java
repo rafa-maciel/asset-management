@@ -27,12 +27,12 @@ public class AssetSearchForm {
     private String contractVendorCNPJ;
     private Integer companyIdentification;
     private AssetStatus status;
-    private Long chipIdentification;
+    private String chipIdentification;
     private String lineIdentification;
     private LocalDate endOfWarranty;
     private LocalDate endOfWarrantyMax;
     private DateSearchType modeSearchEndOfWarranty;
-    private Long imei;
+    private String imei;
     private String tag;
 
     public Specification<Asset> buildSpecs() {

@@ -58,8 +58,8 @@ public class Asset {
     @NonNull
     private AssetStatus status;
 
-    @Column(unique = true)
-    private Long chipIdentification;
+    @Column(unique = true, length = 30)
+    private String chipIdentification;
 
     @Column(length = 18, unique = true)
     private String lineIdentification;
@@ -73,8 +73,8 @@ public class Asset {
     @Column(length = 10, unique = true)
     private String tag;
 
-    @Column(unique = true)
-    private Long imei;
+    @Column(unique = true, length = 20)
+    private String imei;
 
     @Column( columnDefinition = "DATE")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy")

@@ -116,9 +116,9 @@ public abstract class AssetSpecifications {
         };
     }
 
-    public static Specification<Asset> equalChipIdentification(Long chipIdentification) {
+    public static Specification<Asset> equalChipIdentification(String chipIdentification) {
         return (Root<Asset> root, CriteriaQuery<?> criteriaQuery, CriteriaBuilder criteriaBuilder) -> {
-            if (chipIdentification == null || chipIdentification < 1) return null;
+            if (chipIdentification == null || chipIdentification.isEmpty()) return null;
 
             return criteriaBuilder.equal(root.get("chipIdentification"), chipIdentification);
         };
@@ -132,9 +132,9 @@ public abstract class AssetSpecifications {
         };
     }
 
-    public static Specification<Asset> equalImei(Long imei) {
+    public static Specification<Asset> equalImei(String imei) {
         return (Root<Asset> root, CriteriaQuery<?> criteriaQuery, CriteriaBuilder criteriaBuilder) -> {
-            if (imei == null || imei < 1) return null;
+            if (imei == null || imei.isEmpty()) return null;
 
             return criteriaBuilder.equal(root.get("imei"), imei);
         };

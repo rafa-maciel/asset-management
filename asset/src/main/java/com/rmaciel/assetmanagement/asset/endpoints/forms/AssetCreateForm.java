@@ -9,7 +9,6 @@ import lombok.Getter;
 import org.hibernate.validator.constraints.Length;
 
 import javax.validation.constraints.Max;
-import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 import java.util.NoSuchElementException;
@@ -50,9 +49,8 @@ public class AssetCreateForm {
     @Unique(message = "Já existe um dispositivo com este imei",
            service = AssetUniqueService.class,
            fieldName = "imei")
-    @Max(value = 999999999)
-    @Min(value = 999999999)
-    private Long imei;
+    @Length(max = 20)
+    private String imei;
 
     @Unique(message = "Já existe um dispositivo com esta identificação",
            service = AssetUniqueService.class,
@@ -66,8 +64,8 @@ public class AssetCreateForm {
     @Unique(message = "Já existe um dispositivo com este número de chip",
             service = AssetUniqueService.class,
             fieldName = "chipIdentification")
-    @Max(value = 999999999)
-    private Long chipIdentification;
+    @Length(max = 30)
+    private String chipIdentification;
 
     @Unique(message = "Já existe um dispositivo com esta linha",
             service = AssetUniqueService.class,
