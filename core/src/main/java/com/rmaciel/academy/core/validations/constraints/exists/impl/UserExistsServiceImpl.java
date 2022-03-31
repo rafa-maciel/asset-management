@@ -1,12 +1,13 @@
 package com.rmaciel.academy.core.validations.constraints.exists.impl;
 
 import com.rmaciel.academy.core.repositories.UserRepository;
+import com.rmaciel.academy.core.validations.constraints.exists.services.UserExistsService;
 import com.rmaciel.academy.core.validations.constraints.unique.services.UserUniqueService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class UserUniqueServiceImpl implements UserUniqueService {
+public class UserExistsServiceImpl implements UserExistsService {
 
     @Autowired
     private UserRepository repository;
@@ -15,7 +16,7 @@ public class UserUniqueServiceImpl implements UserUniqueService {
     private static final String FIELD_RE = "re";
 
     @Override
-    public boolean fieldValueExists(Object value, String fieldName) throws UnsupportedOperationException {
+    public boolean existsBy(Object value, String fieldName) throws UnsupportedOperationException {
         if (fieldName == null) throw new UnsupportedOperationException();
         if (value == null) return false;
 

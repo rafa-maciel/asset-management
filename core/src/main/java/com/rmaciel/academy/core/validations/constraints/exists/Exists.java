@@ -1,21 +1,21 @@
-package com.rmaciel.academy.core.validations.constraints.unique;
+package com.rmaciel.academy.core.validations.constraints.exists;
 
-import com.rmaciel.academy.core.validations.constraints.unique.services.FieldValueExists;
-import com.rmaciel.academy.core.validations.validators.UniqueValidator;
+import com.rmaciel.academy.core.validations.constraints.exists.services.EntityFinder;
+import com.rmaciel.academy.core.validations.validators.ExistsValidator;
 
 import javax.validation.Constraint;
 import javax.validation.Payload;
 import java.lang.annotation.*;
 
-@Target({ ElementType.METHOD, ElementType.FIELD, ElementType.ANNOTATION_TYPE })
+@Target({ ElementType.FIELD, ElementType.ANNOTATION_TYPE })
 @Retention(RetentionPolicy.RUNTIME)
-@Constraint(validatedBy = UniqueValidator.class)
+@Constraint(validatedBy = ExistsValidator.class)
 @Documented
-public @interface Unique {
-    String message() default "O Campo informado deve ser unico";
+public @interface Exists {
+    String message() default "Este objeto não existe";
     Class<?>[] groups() default {};
     Class<? extends Payload>[] payload() default {};
-    Class<? extends FieldValueExists> service();
+    Class<? extends EntityFinder> service();
     String serviceQualifier() default "";
     String fieldName();
 }
