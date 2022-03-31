@@ -1,31 +1,56 @@
 package com.rmaciel.assetmanagement.asset.endpoints.forms;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.rmaciel.academy.core.dto.FieldErrorMessageDTO;
+import com.rmaciel.academy.core.dto.InvalidAssetDataDTO;
 import com.rmaciel.academy.core.models.*;
 import com.rmaciel.academy.core.repositories.*;
+import com.rmaciel.academy.core.validations.constraints.exists.Exists;
+import com.rmaciel.academy.core.validations.constraints.exists.services.*;
 import com.rmaciel.academy.core.validations.constraints.unique.Unique;
 import com.rmaciel.academy.core.validations.constraints.unique.services.AssetUniqueService;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import org.hibernate.validator.constraints.Length;
 
 import javax.validation.constraints.Max;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
+import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 
 @AllArgsConstructor
+@NoArgsConstructor
 @Getter
 public class ValidAssetForm {
-    @NotNull
-    private Long ownerId;
-    @NotNull
-    private Long locationId;
-    @NotNull
-    private Long modelId;
 
-    private Long contractId;
-    private Long invoiceId;
+    @Exists(message = "Responsável não encontrado com este RE",
+            service = UserExistsService.class,
+            fieldName = "re")
+    private Integer ownerRe;
+
+    @Exists(message = "Localização não encontrada com este Titulo",
+            service = LocationExistsService.class,
+            fieldName = "title")
+    private String locationTitle;
+
+    @Exists(message = "Modelo não encontrado com este Titulo",
+            service = ModelExistsService.class,
+            fieldName = "title")
+    private String modelTitle;
+
+
+    @Exists(message = "Contracto não encontrado com este Número",
+            service = ContractExistsService.class,
+            fieldName = "number")
+    private String contractNumber;
+
+    @Exists(message = "Nota fiscal não encontrada com este Número",
+            service = InvoiceExistsService.class,
+            fieldName = "number")
+    private Integer invoiceNumber;
 
     @Unique(message = "Já existe um dispositivo com este hostname",
             service = AssetUniqueService.class,
@@ -73,7 +98,14 @@ public class ValidAssetForm {
     @Length(max = 18)
     private String lineIdentification;
 
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy")
     private LocalDate endOfWarranty;
+
+    public InvalidAssetDataDTO buildInvalidData(List<FieldErrorMessageDTO> fieldErrors) {
+        return new InvalidAssetDataDTO(ownerRe, locationTitle, modelTitle, contractNumber, invoiceNumber, hostname,
+                serialNumber, tag, imei, companyIdentification, status, chipIdentification, lineIdentification,
+                endOfWarranty, fieldErrors);
+    }
 
     public Asset build(UserRepository userRepository,
                        LocationRepository locationRepository,
@@ -81,9 +113,9 @@ public class ValidAssetForm {
                        ContractRepository contractRepository,
                        InvoiceRepository invoiceRepository) {
 
-        User owner = findOwner(userRepository, ownerId);
-        Location location = findLocation(locationRepository, locationId);
-        Model model = findModel(modelRepository, modelId);
+        User owner = findOwner(userRepository, ownerRe);
+        Location location = findLocation(locationRepository, locationTitle);
+        Model model = findModel(modelRepository, modelTitle);
 
         Asset asset = new Asset(owner, location, model, status);
         asset.setCompanyIdentification(this.companyIdentification);
@@ -95,56 +127,56 @@ public class ValidAssetForm {
         asset.setImei(imei);
         asset.setEndOfWarranty(endOfWarranty);
 
-        Contract contract = findContract(contractRepository, contractId);
+        Contract contract = findContract(contractRepository, contractNumber);
         if (contract != null) asset.setContract(contract);
 
-        Invoice invoice = findInvoice(invoiceRepository, invoiceId);
+        Invoice invoice = findInvoice(invoiceRepository, invoiceNumber);
         if (invoice != null) asset.setInvoice(invoice);
 
         return asset;
     }
 
 
-    private User findOwner(UserRepository repository, Long id) {
-        if (id == null || id < 1) throw new UnsupportedOperationException();
+    private User findOwner(UserRepository repository, Integer re) {
+        if (re == null || re < 1) throw new UnsupportedOperationException();
 
-        Optional<User> finder = repository.findById(id);
+        Optional<User> finder = repository.findByRe(re);
         if (finder.isEmpty()) throw new NoSuchElementException();
 
         return finder.get();
     }
 
-    private Location findLocation(LocationRepository repository, Long id) {
-        if (id == null || id < 1) throw new UnsupportedOperationException();
+    private Location findLocation(LocationRepository repository, String title) {
+        if (title == null || title.isEmpty()) throw new UnsupportedOperationException();
 
-        Optional<Location> finder = repository.findById(id);
+        Optional<Location> finder = repository.findByTitle(title);
         if (finder.isEmpty()) throw new NoSuchElementException();
 
         return finder.get();
     }
 
-    private Model findModel(ModelRepository repository, Long id) {
-        if (id == null || id < 1) throw new UnsupportedOperationException();
+    private Model findModel(ModelRepository repository, String title) {
+        if (title == null || title.isEmpty()) throw new UnsupportedOperationException();
 
-        Optional<Model> finder = repository.findById(id);
+        Optional<Model> finder = repository.findByTitle(title);
         if (finder.isEmpty()) throw new NoSuchElementException();
 
         return finder.get();
     }
 
-    private Contract findContract(ContractRepository repository, Long id) {
-        if (id == null || id < 1) return null;
+    private Contract findContract(ContractRepository repository, String number) {
+        if (number == null || number.isEmpty()) return null;
 
-        Optional<Contract> finder = repository.findById(id);
+        Optional<Contract> finder = repository.findByNumber(number);
         if (finder.isEmpty()) return null;
 
         return finder.get();
     }
 
-    private Invoice findInvoice(InvoiceRepository repository, Long id) {
-        if (id == null || id < 1) return null;
+    private Invoice findInvoice(InvoiceRepository repository, Integer number) {
+        if (number == null || number < 1) return null;
 
-        Optional<Invoice> finder = repository.findById(id);
+        Optional<Invoice> finder = repository.findByNumber(number);
         if (finder.isEmpty()) return null;
 
         return finder.get();

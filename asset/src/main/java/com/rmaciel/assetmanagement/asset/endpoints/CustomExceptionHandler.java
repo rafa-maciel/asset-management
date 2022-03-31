@@ -2,6 +2,7 @@ package com.rmaciel.assetmanagement.asset.endpoints;
 
 
 import com.rmaciel.assetmanagement.asset.utils.ApiErrorResponse;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

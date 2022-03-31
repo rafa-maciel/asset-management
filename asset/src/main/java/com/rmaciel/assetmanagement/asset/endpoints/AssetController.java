@@ -1,5 +1,8 @@
 package com.rmaciel.assetmanagement.asset.endpoints;
 
+import com.rmaciel.academy.core.dto.FieldErrorMessageDTO;
+import com.rmaciel.academy.core.dto.InvalidAssetDataDTO;
+import com.rmaciel.academy.core.dto.ValidAssetListDTO;
 import com.rmaciel.academy.core.models.Asset;
 import com.rmaciel.academy.core.models.Note;
 import com.rmaciel.academy.core.models.UserAccount;
@@ -7,6 +10,7 @@ import com.rmaciel.academy.core.repositories.*;
 import com.rmaciel.assetmanagement.asset.endpoints.forms.AssetCreateForm;
 import com.rmaciel.assetmanagement.asset.endpoints.forms.AssetSearchForm;
 import com.rmaciel.assetmanagement.asset.endpoints.forms.AssetUpdateForm;
+import com.rmaciel.assetmanagement.asset.endpoints.forms.ValidAssetForm;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -15,15 +19,22 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.ConstraintViolation;
 import javax.validation.Valid;
+import javax.validation.Validator;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/assets")
 @Slf4j
+@Validated
 public class AssetController {
 
     private final AssetRepository assetRepository;
@@ -34,6 +45,7 @@ public class AssetController {
     private final InvoiceRepository invoiceRepository;
     private final UserAccountRepository userAccountRepository;
     private final NoteRepository noteRepository;
+    private final Validator validator;
 
     protected AssetController(AssetRepository assetRepository,
                               UserRepository userRepository,
@@ -42,7 +54,8 @@ public class AssetController {
                               ContractRepository contractRepository,
                               InvoiceRepository invoiceRepository,
                               UserAccountRepository userAccountRepository,
-                              NoteRepository noteRepository) {
+                              NoteRepository noteRepository,
+                              Validator validator) {
         this.assetRepository = assetRepository;
         this.userRepository = userRepository;
         this.locationRepository = locationRepository;
@@ -51,6 +64,7 @@ public class AssetController {
         this.invoiceRepository = invoiceRepository;
         this.userAccountRepository = userAccountRepository;
         this.noteRepository = noteRepository;
+        this.validator = validator;
     }
 
     private Asset findAssetOrNull(Long id) {
@@ -133,4 +147,28 @@ public class AssetController {
 
         return ResponseEntity.ok().build();
     }
+
+    @PostMapping("/import/validate")
+    public ResponseEntity<ValidAssetListDTO> validPreImports(@RequestBody List<ValidAssetForm> listForm) {
+        ValidAssetListDTO validAssetList = new ValidAssetListDTO();
+
+        listForm.forEach(assetForm -> {
+            Set<ConstraintViolation<ValidAssetForm>> violations = validator.validate(assetForm);
+
+            if (violations.isEmpty()) {
+                Asset asset = assetForm.build(userRepository, locationRepository, modelRepository, contractRepository, invoiceRepository);
+                validAssetList.addValidAsset(asset);
+            } else {
+                List<FieldErrorMessageDTO> fieldErrors = new ArrayList<>();
+                violations.forEach(violation ->
+                        violation.getPropertyPath().forEach(nd
+                                -> fieldErrors.add(new FieldErrorMessageDTO(nd.getName(), violation.getMessage()))));
+
+                validAssetList.addInvalidAssetData(assetForm.buildInvalidData(fieldErrors));
+            }
+        });
+
+        return ResponseEntity.ok(validAssetList);
+    }
+
 }

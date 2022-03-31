@@ -1,26 +1,25 @@
 package com.rmaciel.academy.core.validations.validators;
 
-import com.rmaciel.academy.core.validations.constraints.unique.Unique;
-import com.rmaciel.academy.core.validations.constraints.unique.services.FieldValueExists;
+import com.rmaciel.academy.core.validations.constraints.exists.Exists;
+import com.rmaciel.academy.core.validations.constraints.exists.services.EntityFinder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 
-public class UniqueValidator implements ConstraintValidator<Unique, Object> {
+public class ExistsValidator implements ConstraintValidator<Exists, Object> {
     @Autowired
     private ApplicationContext applicationContext;
 
-    private FieldValueExists service;
+    private EntityFinder service;
     private String fieldName;
 
-
     @Override
-    public void initialize(Unique unique) {
-        Class<? extends FieldValueExists> clazz = unique.service();
-        this.fieldName = unique.fieldName();
-        String serviceQualifier = unique.serviceQualifier();
+    public void initialize(Exists exists) {
+        Class<? extends EntityFinder> clazz = exists.service();
+        this.fieldName = exists.fieldName();
+        String serviceQualifier = exists.serviceQualifier();
 
         if (!serviceQualifier.equals("")) {
             this.service = this.applicationContext.getBean(serviceQualifier, clazz);
@@ -31,6 +30,6 @@ public class UniqueValidator implements ConstraintValidator<Unique, Object> {
 
     @Override
     public boolean isValid(Object o, ConstraintValidatorContext constraintValidatorContext) {
-        return !this.service.fieldValueExists(o, this.fieldName);
+        return this.service.existsBy(o, this.fieldName);
     }
 }
