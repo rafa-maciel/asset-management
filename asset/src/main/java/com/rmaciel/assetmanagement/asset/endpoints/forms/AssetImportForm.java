@@ -6,6 +6,7 @@ import com.rmaciel.academy.core.validations.constraints.unique.Unique;
 import com.rmaciel.academy.core.validations.constraints.unique.services.AssetUniqueService;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import org.hibernate.validator.constraints.Length;
 
 import javax.validation.constraints.Max;
@@ -13,6 +14,7 @@ import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 
 @AllArgsConstructor
+@NoArgsConstructor
 @Getter
 public class AssetImportForm {
     @NotNull
