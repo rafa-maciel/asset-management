@@ -7,10 +7,7 @@ import com.rmaciel.academy.core.models.Asset;
 import com.rmaciel.academy.core.models.Note;
 import com.rmaciel.academy.core.models.UserAccount;
 import com.rmaciel.academy.core.repositories.*;
-import com.rmaciel.assetmanagement.asset.endpoints.forms.AssetCreateForm;
-import com.rmaciel.assetmanagement.asset.endpoints.forms.AssetSearchForm;
-import com.rmaciel.assetmanagement.asset.endpoints.forms.AssetUpdateForm;
-import com.rmaciel.assetmanagement.asset.endpoints.forms.ValidAssetForm;
+import com.rmaciel.assetmanagement.asset.endpoints.forms.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -136,11 +133,11 @@ public class AssetController {
     }
 
     @PostMapping("/import")
-    public ResponseEntity<?> importAssets(@RequestBody @Valid List<AssetCreateForm> forms) {
+    public ResponseEntity<?> importAssets(@RequestBody @Valid List<AssetImportForm> forms) {
         if (forms != null) {
             forms.forEach(form -> {
                 if (form != null) {
-                    assetRepository.save(form.build(userRepository, locationRepository, modelRepository, contractRepository, invoiceRepository));
+                    assetRepository.save(form.build());
                 }
             });
         }
