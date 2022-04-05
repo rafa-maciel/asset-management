@@ -140,11 +140,29 @@ public abstract class AssetSpecifications {
         };
     }
 
+
+
     public static Specification<Asset> equalTag(String tag) {
         return (Root<Asset> root, CriteriaQuery<?> criteriaQuery, CriteriaBuilder criteriaBuilder) -> {
             if (tag == null || tag.isEmpty()) return null;
 
             return criteriaBuilder.equal(root.get("tag"), tag);
+        };
+    }
+
+    public static Specification<Asset> likeSerialNumber(String serialNumber) {
+        return (Root<Asset> root, CriteriaQuery<?> criteriaQuery, CriteriaBuilder criteriaBuilder) -> {
+            if (serialNumber == null || serialNumber.isEmpty()) return null;
+
+            return criteriaBuilder.like(root.get("serialNumber"), "%" + serialNumber + "%");
+        };
+    }
+
+    public static Specification<Asset> likeHostname(String hostname) {
+        return (Root<Asset> root, CriteriaQuery<?> criteriaQuery, CriteriaBuilder criteriaBuilder) -> {
+            if (hostname == null || hostname.isEmpty()) return null;
+
+            return criteriaBuilder.like(root.get("hostname"), "%" + hostname + "%");
         };
     }
 
