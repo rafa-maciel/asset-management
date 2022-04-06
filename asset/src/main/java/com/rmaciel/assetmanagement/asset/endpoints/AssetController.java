@@ -132,6 +132,13 @@ public class AssetController {
         return ResponseEntity.ok(page);
     }
 
+    @GetMapping("/fast-search")
+    public ResponseEntity<Page<Asset>> fastSearch(Pageable pageable, @Valid AssetFastSearchForm form) {
+        Specification<Asset> specs = form.buildSpecs();
+        Page<Asset> page = assetRepository.findAll(specs, pageable);
+        return ResponseEntity.ok(page);
+    }
+
     @PostMapping("/import")
     public ResponseEntity<?> importAssets(@RequestBody @Valid List<AssetImportForm> forms) {
         if (forms != null) {
